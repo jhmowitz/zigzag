@@ -12,9 +12,9 @@ using namespace System::Security::Permissions;
 [assembly:AssemblyTitleAttribute("ZigZagEngine")];
 [assembly:AssemblyDescriptionAttribute("")];
 [assembly:AssemblyConfigurationAttribute("")];
-[assembly:AssemblyCompanyAttribute("Microsoft")];
+[assembly:AssemblyCompanyAttribute("Mowitz Software")];
 [assembly:AssemblyProductAttribute("ZigZagEngine")];
-[assembly:AssemblyCopyrightAttribute("Copyright (c) Microsoft 2011")];
+[assembly:AssemblyCopyrightAttribute("Copyright © Joachim Mowitz 1993 - 2013")];
 [assembly:AssemblyTrademarkAttribute("")];
 [assembly:AssemblyCultureAttribute("")];
 
@@ -35,4 +35,4 @@ using namespace System::Security::Permissions;
 
 [assembly:CLSCompliantAttribute(true)];
 
-[assembly:SecurityPermission(SecurityAction::RequestMinimum, UnmanagedCode = true)];
+// [assembly:SecurityPermission(SecurityAction::RequestMinimum, UnmanagedCode = true)];
