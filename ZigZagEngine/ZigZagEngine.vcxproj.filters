@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ALG_GEO.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CIR_STR.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DIRECT.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EVENT.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GRAPHCMD.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="KEY_DEF.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MOW_DEFS.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MYCOLORS.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PRC_DEF.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PRC_STR.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PRC_TIM.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TRI_STR.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TSS_THR.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ZigZagEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IZigZagHost.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mow_util\clip\cadre.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mow_util\clip\lin_clip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mow_util\clip\cir_clip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mow_util\mow_type.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mow_util\ps_file\PSF_MASK.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mow_util\memo\link_def.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mow_util\memo\link_cpp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="doscompat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="prc_main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mow_util\make_psf\MAKE_PSF.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mow_util\clip\hal_clip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mow_util\ps_file\PSF_CPP.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mow_util\ps_file\PSF_DEF.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AssemblyInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ALG_GEO.CPP">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CIR_STR.CPP">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PRC_STR.CPP">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PRCMAIN.CPP">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VIEWGRPH.CPP">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TRI_STR.CPP">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TSS_THR.CPP">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ZigZagEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="app.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

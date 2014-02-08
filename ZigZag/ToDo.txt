@@ -1,0 +1,47 @@
+﻿29-05-2013:
+
+* EPS-directory verplaatsen naar %APPDATA%\ZigZag
+* Ook niet meer opnemen in setup (Dummy.txt mag weg)
+* Zigzag.eps blijft openstaan
+* Maximale afmeting van de bitmap beter oplossen; resizen bij resizen venster?
+* F12 nakijken - crasht
+
+ALGEMEEN
+
+- State terugkoppelen vanuit Engine naar Host (paused, zoomfactor, enzovoort)
+- Image display control uitbreiden met extra mogelijkheden (zoom, rotate)
+
+unsigned int myseed = 0x015A4E36;
+
+int myrand(void)
+{
+  unsigned int t = myseed * 0x015A4E35 + 1;
+  myseed = t;
+  return (int)(t >> 16) & 0x7FFF;
+}
+
+void mysrand(unsigned int seed)
+{
+  myseed = seed;
+  myrand();
+}
+
+int main(void)
+{
+  unsigned t = time(NULL);
+
+  printf("%d %d\n", rand(), myrand());
+  printf("%d %d\n", rand(), myrand());
+  printf("%d %d\n", rand(), myrand());
+  printf("%d %d\n", rand(), myrand());
+
+  srand(t);
+  mysrand(t);
+
+  printf("%d %d\n", rand(), myrand());
+  printf("%d %d\n", rand(), myrand());
+  printf("%d %d\n", rand(), myrand());
+  printf("%d %d\n", rand(), myrand());
+
+  return 0;
+}

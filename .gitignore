@@ -1,0 +1,17 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+*.scc
+*.vspscc
+*.user
+*.sdf
+*.suo
+/Ghostscript/bin/Debug
+/Ghostscript/obj/Debug
+/ZigZag/bin/Debug
+/ZigZag/obj/x86/Debug
+/ZigZagEngine/Debug
+/ZigZagSetup
+/ZigZagNETSetup/Setups
+/ZigZagNETSetup/ZigZagNETSetup/Express
