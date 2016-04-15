@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2013 for Windows Desktop
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZigZagEngine", "ZigZagEngine\ZigZagEngine.vcxproj", "{36203138-BF6E-45B3-875A-643E3F02C67B}"
 EndProject
@@ -167,21 +167,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(SourceCodeControl) = preSolution
-		SccNumberOfProjects = 5
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = ZigZag\\ZigZag.csproj
-		SccLocalPath1 = .
-		SccProjectFilePathRelativizedFromConnection1 = ZigZag\\
-		SccProjectUniqueName2 = ZigZagEngine\\ZigZagEngine.vcxproj
-		SccLocalPath2 = .
-		SccProjectFilePathRelativizedFromConnection2 = ZigZagEngine\\
-		SccProjectUniqueName3 = ZigZagNETSetup\\ZigZagNETSetup.isproj
-		SccLocalPath3 = .
-		SccProjectFilePathRelativizedFromConnection3 = ZigZagNETSetup\\
-		SccProjectUniqueName4 = Ghostscript\\Ghostscript.vbproj
-		SccLocalPath4 = .
-		SccProjectFilePathRelativizedFromConnection4 = Ghostscript\\
 	EndGlobalSection
 EndGlobal
