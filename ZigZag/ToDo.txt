@@ -6,8 +6,6 @@
 * Maximale afmeting van de bitmap beter oplossen; resizen bij resizen venster?
 * F12 nakijken - crasht
 
-Overgezet naar .NET Framework 4.5.2
-
 ALGEMEEN
 
 - State terugkoppelen vanuit Engine naar Host (paused, zoomfactor, enzovoort)
