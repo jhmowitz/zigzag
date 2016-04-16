@@ -608,7 +608,7 @@ namespace ZigZag
       return Path.Combine(this._dataPath, name);
     }
         #endregion
-        // Arno: hier gaat iets fout als de "m" is aangetikt, waarna het inputform een getal (magnification factor) vraagt, en als dat dan leeg blijft!
+        // arno: hier gaat iets fout als de "m" is aangetikt, waarna het inputform een getal (magnification factor) vraagt, en als dat dan leeg blijft!
         // de fouten-procedure zou dan niet in werking moeten worden gezet en het proces zou gewoon vervolgd moeten worden
 
         #region "Keyboard handling"
