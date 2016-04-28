@@ -113,7 +113,7 @@ namespace ZigZag
 
       this._dataPath = dataFolder;
     }
-
+// arno: bij het debuggen met F11 kom ik telkens hier terug, zonder dat ik het inputscherm te zien krijg...
     void Application_Idle(object sender, EventArgs e)
     {
       if (this._startOnNextIdle)
