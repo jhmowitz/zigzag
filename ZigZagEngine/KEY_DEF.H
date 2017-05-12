@@ -9,7 +9,7 @@
 
 #ifdef _STT2MAIN_CPP      // -- parsing before processing
    // (&) toggle: circles connected to triangles and v.v.
-   #define   CROSS_OVER      '_'
+   #define   CROSS_OVER      '_'       // underscore, circles to triangles coupled or not
    // (&) change propability for extra emergence at "loss of complexity"
    #define   EXTRA_EMERG     '$'     // toggle: extra emergence 0 to 1
    #define   INCR_EMERG      'Z'     // increase
@@ -23,12 +23,12 @@
    #define   TESS_THROW      '.'     // initiate
 
    #define   TESS_SUBMIT     ':'     // (*) submit
-   #define   TESS_ABORT       27     // (*) abort
+   #define   TESS_ABORT       27     // (*) escape
 
    // frame and subframe for tesselation(s)
    #define   FRAME_TYPE      'f'     // (*) change type of frame
    #define   FRAME_SPLT      '/'     // (*) toggle: single or split frame
-   #define   FRAME_SWITCH    -33     // (*) switch current frame (alt_f)
+   #define   FRAME_SWITCH    -33     // (*) switch current frame (alt_f) inside/outside
 
    // rotate frame 3 (or about 0.6) degrees
    #define   FRAME_ROT_CW    'Q'     // (*) clockwise
@@ -56,7 +56,7 @@
    #define   THROW_TYPE      ','     // (*) change type of throw objects
 
    // handle tesselation(s)
-   #define   TESS_TYPE       't'     // (*) change tessalation type
+   #define   TESS_TYPE       't'     // (*) change tesselation type
 
    #define   INCR_DENSITY    'D'     // (*) increase density of points
    #define   DECR_DENSITY    'd'     // (*) decrease density of points
@@ -104,115 +104,120 @@
 #endif                            // _TSS_THR_CPP 
 
 
-#ifdef _VIEWGRPH_CPP      // -- graphics: screen and view
+#ifdef _VIEWGRPH_CPP              // -- graphics: screen and view
 
-#ifdef __MAKE_PSF__
+#ifdef __MAKE_PSF__                    // PostScript prints
    // -- layout of multiple pages:
-   #define   PS_CUTLINES     -38   // toggle3: draw cut lines  (alt_l)
+   #define   PS_CUTLINES     -38         // toggle3: draw cut lines  (alt_l)
 
    // -- layout of page:
-   #define   PS_DATE         -32   // toggle: draw date  (alt_d)
-   #define   PS_MARK_PAGE    -50   // mark page corner left/right (alt_m)
-   #define   PS_SPREADING    -43   // vary margins between pictures (alt_\)
+   #define   PS_DATE         -32         // toggle: draw date  (alt_d)
+   #define   PS_MARK_PAGE    -50         // mark page corner left/right (alt_m)
+   #define   PS_SPREADING    -43         // vary margins between pictures (alt_\)
 
    // -- cadre: ten steps from portrait to landscape
-   #define   PS_CADRE_LSCP   'c'   // landscape (+1.0)
-   #define   PS_CADRE_PORT   'C'   // portrait  (-1.0)
-   #define   PS_CADRE_P2L    -46   // from portrait to landscape (alt_c)
+   #define   PS_CADRE_LSCP   'c'        // landscape (+1.0)
+   #define   PS_CADRE_PORT   'C'        // portrait  (-1.0)
+   #define   PS_CADRE_P2L    -46        // from portrait to landscape (alt_c)
 
    // -- layout of picture:
-   #define   PS_FRAME        -33   // toggle: draw frame (alt_f)
-   #define   PS_TITLE        -20   // toggle: draw title (alt_t)
+   #define   PS_FRAME        -33        // toggle: draw frame (alt_f)
+   #define   PS_TITLE        -20        // toggle: draw title (alt_t)
 
-   #define   PS_BK_WHITE     'b'   // background is WHITE (1.0)
-   #define   PS_BK_GRAY      'B'   // background is gray  (0.8)
-   #define   PS_BK_DARKER    -48   // background is darkening (0.02) (alt_b)
+   #define   PS_BK_WHITE     'b'        // background is WHITE (1.0)
+   #define   PS_BK_GRAY      'B'        // background is gray  (0.8)
+   #define   PS_BK_DARKER    -48        // background is darkening (0.02) (alt_b)
    
-   #define   PS_PAGETHICK    'T'   // 3 possible page thicknesses
-   #define   PS_PICTTHICK    't'   // 4 possible picture thicknesses
+   #define   PS_PAGETHICK    'T'        // 3 possible page thicknesses
+   #define   PS_PICTTHICK    't'        // 4 possible picture thicknesses
 
    // -- printing of page or picture:
-   #define   PS_PICTURE      'p'   // print next picture (even whole page)
-   #define   PS_DIVIDED      'P'   // divide page into several pictures
-   #define   PS_PLACE_I      'i'   // print number i to be next
-   #define   PS_SEQUENCE_I   'I'   // print number i to be next in sequence
-   #define   PS_FINISH       -25   // print page to be finished (alt_p)
-   #define   PS_CANCEL        27   // cancel divided print (esc)
+   #define   PS_PICTURE      'p'        // print next picture (even whole page)
+   #define   PS_DIVIDED      'P'        // divide page into several pictures
+   #define   PS_PLACE_I      'i'        // print number i to be next
+   #define   PS_SEQUENCE_I   'I'        // print number i to be next in sequence
+   #define   PS_FINISH       -25        // print page to be finished (alt_p)
+   #define   PS_CANCEL        27        // cancel divided print (esc)
 
    // -- printing a series of contours with a fixed timestep:
-   #define   PS_FIXSTEP_1   -133   // initial, finish the series (F11) on one file
-   #define   PS_FIXSTEP_M   -134   // initial, finish the series (F12) on several files
+   #define   PS_FIXSTEP_1   -133        // initial, finish the series (F11) on one file
+   #define   PS_FIXSTEP_M   -134        // initial, finish the series (F12) on several files
 
-   #define   PS_MLTPAGE      'm'   // print picture of multiple pages
-   #define   PS_MLTPAGEF     'M'   // print picture of multiple pages, var. file names
+   #define   PS_MLTPAGE      'm'        // print picture of multiple pages
+   #define   PS_MLTPAGEF     'M'        // print picture of multiple pages, var. file names
 
-   #define   PS_ALTER_LPT    '['   // alter print queue for .eps file
-   #define   PS_SHOW_LPT     ']'   // show print queue for .eps file
+   #define   PS_ALTER_LPT    '['        // alter print queue for .eps file
+   #define   PS_SHOW_LPT     ']'        // show print queue for .eps file
 
-   #define   PS_INCR_DIN     -92   // increase DIN number of paper size (Shft_F9)
-   #define   PS_DECR_DIN     -67   // decrease DIN number of paper size (F9)
+   #define   PS_INCR_DIN     -92        // increase DIN number of paper size (Shft_F9)
+   #define   PS_DECR_DIN     -67        // decrease DIN number of paper size (F9)
 
-   #define   Q_MARK          '?'   // question mark to interrupt file name reading
-#endif                          // __MAKE_PSF__
+   #define   Q_MARK          '?'        // question mark to interrupt file name reading
+#endif                               // __MAKE_PSF__
 
-   #define   INIT_VIEW       '0'     // init/reset view
+                                     // screendraw
+   #define   INIT_VIEW       '0'          // init/reset view
 
-   #define   FAST_ZOOM_IN    'S'     // zoom in
-   #define   FAST_ZOOM_OUT   's'     // zoom out
-   #define   SLOW_ZOOM_OUT   -31     // zoom out slowly (alt_s)
+   #define   FAST_ZOOM_IN    'S'          // zoom in
+   #define   FAST_ZOOM_OUT   's'          // zoom out
+   #define   SLOW_ZOOM_OUT   -31          // zoom out slowly (alt_s)
 
-   #define   BIG_STEP_RIGHT  'X'     // step right
-   #define   BIG_STEP_LEFT   'x'     // step left
-   #define   SML_STEP_LEFT   -45     // step left slightly (alt_x)
+   #define   BIG_STEP_RIGHT  'X'          // step right
+   #define   BIG_STEP_LEFT   'x'          // step left
+   #define   SML_STEP_LEFT   -45          // step left slightly (alt_x)
 
-   #define   BIG_STEP_UP     'Y'     // step up
-   #define   BIG_STEP_DOWN   'y'     // step down
-   #define   SML_STEP_DOWN   -21     // step down slightly (alt_y)
+   #define   BIG_STEP_UP     'Y'          // step up
+   #define   BIG_STEP_DOWN   'y'          // step down
+   #define   SML_STEP_DOWN   -21          // step down slightly (alt_y)
 
-   #define   COLOR_GRAY      'k'     // toggle: color or gray
-   #define   COLOR_EXCITE    'K'     // toggle: color excited or normal
+   #define   COLOR_GRAY      'k'          // toggle: color or gray
+   #define   COLOR_EXCITE    'K'          // toggle: color excited or normal
 
-   #define   DRAW_MODE       -50     // toggle: draw contours or bisectors (alt_m)
+   #define   DRAW_MODE       -50          // toggle: draw contours or bisectors (alt_m)
 
-   #define   DRAW_GENERA     -34     // toggle: draw all/one generation(s) (alt_g)
-   #define   NEXT_GENERA     'g'     // draw next generation
-   #define   PREV_GENERA     'G'     // draw previous generation
+   #define   DRAW_GENERA     -34          // toggle: draw all/one generation(s) (alt_g)
+   #define   NEXT_GENERA     'g'          // draw next generation
+   #define   PREV_GENERA     'G'          // draw previous generation
 
-   #define   DRAW_CADRE      -53     // toggle: draw cadre (alt_/)
-   #define   DRAW_WHICH      'W'     // draw circles, triangles or both
+   #define   TOG_SING_POLY   -44          // toggle: draw single polygon or not (alt_z)
+   #define   NXT_SING_POLY   'Z'          // next polygon is single
+   #define   PRV_SING_POLY   'z'          // previous polygon is single
 
-   #define   SCRN_REPAINT    'R'     // toggle: screen repaint
-   #define   ONCE_REPAINT    'r'     // repaint screen once
+   #define   DRAW_CADRE      -53          // toggle: draw cadre (alt_/)
+   #define   DRAW_WHICH      'W'          // draw circles, triangles or both
 
-   #define   INCR_DELAY      'D'     // increase delay
-   #define   DECR_DELAY      'd'     // decrease delay
-   #define   SHOW_DELAY      '~'     // show number of pictures per 10 seconds
+   #define   SCRN_REPAINT    'R'          // toggle: screen repaint
+   #define   ONCE_REPAINT    'r'          // repaint screen once
+
+   #define   INCR_DELAY      'D'          // increase delay
+   #define   DECR_DELAY      'd'          // decrease delay
+   #define   SHOW_DELAY      '~'          // show number of pictures per 10 seconds
 
    // -- (screen)views (0, .. N_VIEW-1) to handle at key stroke
-   #define   ACTIVE_VIEW     -59     // activate   (F1)
-   #define   DELETE_VIEW     -84     // delete     (shift_F1)
-   #define   INITAL_VIEW    -104     // initialize (alt_F1)
-#endif                            // _VIEWGRPH_CPP 
+   #define   ACTIVE_VIEW     -59          // activate   (F1)
+   #define   DELETE_VIEW     -84          // delete     (shift_F1)
+   #define   INITAL_VIEW    -104          // initialize (alt_F1)
+#endif                                 // _VIEWGRPH_CPP 
 
 
-#ifdef _STT2MAIN_CPP      // -- processing, flow and test mode
+#ifdef _STT2MAIN_CPP           // -- processing, flow and test mode
    
    // -- processing
-   #define   INCR_STEP       '+'     // increase process time step
-   #define   DECR_STEP       '-'     // decrease process time step
-   #define   PAUSE_GO        '!'     // toggle: process pause/go
-   #define   PROG_QUIT        27     // quit computing (esc)
+   #define   INCR_STEP       '+'          // increase process time step
+   #define   DECR_STEP       '-'          // decrease process time step
+   #define   PAUSE_GO        '!'          // toggle: process pause/go
+   #define   PROG_QUIT        27          // quit computing (esc)
 
    // -- flow and test mode
-   #define   TEST_MODE       '|'     // toggle: test mode
-   #define   MORE_FLOW       'F'     // activate more flow
-   #define   LESS_FLOW       'f'     // deactivate flow
-   #define   MORE_SECS       '}'     // increase number of delay seconds 
-   #define   LESS_SECS       '{'     // decrease number of delay seconds 
-   #define   IND_EVENT       -18     // indicate events (alt_e)
+   #define   TEST_MODE       '|'          // toggle: test mode
+   #define   MORE_FLOW       'F'          // activate more flow
+   #define   LESS_FLOW       'f'          // deactivate flow
+   #define   MORE_SECS       '}'          // increase number of delay seconds 
+   #define   LESS_SECS       '{'          // decrease number of delay seconds 
+   #define   IND_EVENT       -18          // indicate events (alt_e)
 
-   #define   COUNT_CLASS     '&'     // count all production classes
-   #define   SHOW_TABLE      '#'     // show table of events, class counts
-#endif                           // _STT2MAIN_CPP
+   #define   COUNT_CLASS     '&'          // count all production classes
+   #define   SHOW_TABLE      '#'          // show table of events, class counts
+#endif                                // _STT2MAIN_CPP
 
 #endif                           // _KEY_DEF_H 

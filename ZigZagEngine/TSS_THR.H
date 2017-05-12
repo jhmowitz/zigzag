@@ -70,7 +70,7 @@ private:
    TSSL *t, *l;                 // current/loop tesselation
    INT2 nTess;                  // n of tesselations in use
    INT2 nS;                     // N of points to be thrown in one strip
-   COLOR TessCol;               // to draw points of tesselation
+   MYCOLOR TessCol;               // to draw points of tesselation
 
    void Init();
    void ScreenInit();                 // (re)set Mp, Radi
@@ -78,7 +78,7 @@ private:
    void FramePts( INT2, REAL, REAL ); // set nF, Fp[]
    
    void SetTessela();                 // handle "regular" tesselations
-   void TesselTriSqr( REAL, COLOR );  // generate triangular/square tesselation
+   void TesselTriSqr( REAL, MYCOLOR );  // generate triangular/square tesselation
    void TesselHexa();                 // generate hexagonal tesselation
 
    void ApplyStrip( pPNT2, pVEC2, INT2 );
@@ -89,10 +89,10 @@ private:
    void Perturb( pPNT2 );             // perturbation of one point
 
    void ApplyP( pPNT2 );              // handle circle/point draw/throw
-   void DrawP( pPNT2, COLOR );        // draw point
+   void DrawP( pPNT2, MYCOLOR );      // draw point
 
-   void ApplyV( pPNT2 );              // handle the objects "double V"
-   void DrawV( pPNT2, REAL, COLOR );  // draw "double V"
+   void ApplyV( pPNT2 );                // handle the objects "double V"
+   void DrawV( pPNT2, REAL, MYCOLOR );  // draw "double V"
 
    void DrawFrame();                  // draw frame
    void DrawC( pPNT2, REAL, INT2 );   // draw full circle

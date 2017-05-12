@@ -1,9 +1,9 @@
-// mycolors.h -- use own (enum) type COLOR before system type COLORS
+// mycolors.h -- use own (enum) type MYCOLOR before system type COLORS
 
 #ifndef _MYCOLORS_H
 #define _MYCOLORS_H
 
-enum COLOR {           // -- colors for graphics: D (dark), L (light)
+enum MYCOLOR {           // -- colors for graphics: D (dark), L (light)
    DBn, LYw,              // brown, yellow
    DGn, LGn,              // green
    DRd, LRd,              // red
@@ -24,9 +24,9 @@ EXTERN void InitColor();       // initial main color flags
 EXTERN void SetTempGray();     // to set TmpColor
 EXTERN void SetColorOn();      // to reset after using TmpColor
 
-                               // transfer own (enum) type COLOR to system type COLORS
-EXTERN void SetColor( COLOR );
-EXTERN void PutPixel( INT2, INT2, COLOR );
+                               // transfer own (enum) type MYCOLOR to system type COLORS
+EXTERN void SetColor( MYCOLOR );
+EXTERN void PutPixel( INT2, INT2, MYCOLOR );
                                // transfer own (enum) type CTYP to system type COLORS
 EXTERN void SetColor( CTYP );
 EXTERN void SetColEx( CTYP );
@@ -49,8 +49,8 @@ void SetTempGray() {                             // to set TmpColor
 }
 void SetColorOn() { NoColor = TmpColor; }        // to reset colors after TmpColor
 
-// transfer COLOR to COLORS -- ! no prototype
-COLORS TransferColor( COLOR C ) {
+// transfer MYCOLOR to COLORS -- ! no prototype
+COLORS TransferColor( MYCOLOR C ) {
    switch( (INT2)C ) {
       case DBn: return BROWN;
       case LYw: return YELLOW;
@@ -72,9 +72,9 @@ COLORS TransferColor( COLOR C ) {
    return BLACK;
 }
 
-void SetColor( COLOR C ) { SETCOLOR( TransferColor(C) ); }
+void SetColor( MYCOLOR C ) { SETCOLOR( TransferColor(C) ); }
 
-void PutPixel( INT2 X, INT2 Y, COLOR C ) { PUTPIXEL( X, Y, TransferColor(C) ); }
+void PutPixel( INT2 X, INT2 Y, MYCOLOR C ) { PUTPIXEL( X, Y, TransferColor(C) ); }
 
 // transfer CTYP to COLORS -- ! no prototype
 COLORS Type2Color( CTYP Tp ) {

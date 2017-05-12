@@ -142,11 +142,11 @@ public:
    TCONTCT( pBISC );                      // handle one peek
 };
 
-class TDISINT: public HOOK {   // -- to control one disintegration
-   pCLOS pol;                     // initial: polygon of disintegration
+class TDISINT: public HOOK {   // -- to control one desintegration
+   pCLOS pol;                     // initial: polygon of desintegration
    pTISP ori;                     // initial: time/space of event for origin
-   pCONT die;                     // initial: disintegrating contour
-   pCONT c1, c2;                  // constructing: new neighbours after disintegration
+   pCONT die;                     // initial: desintegrating contour
+   pCONT c1, c2;                  // constructing: new neighbours after desintegration
    pBISC b1, b2;                  // constructing: melt into bisector between c1 and c2
 
    BOOL  Converge();              // check around for convergence

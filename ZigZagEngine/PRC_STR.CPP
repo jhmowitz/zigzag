@@ -21,15 +21,15 @@
 
 // -- declaration of common memory control: bulk allocation of classes with storage
                               // -- guard memory classes for production classes
-GMEMO< TISP, 60, 5000 > MTisp;   // time/space
+GMEMO< TISP, 600, 5000 > MTisp;   // time/space
 
-GMEMO< CLOS, 20, 2000 > MClos;   // closures: components or polygons
+GMEMO< CLOS, 300, 2000 > MClos;   // closures: components or polygons
 
-GMEMO< ARCS, 40, 5000 > MArcs;   // arcs of circles
-GMEMO< BUMP, 50, 2000 > MBump;   // pairs of arcs, to bump into each other
+GMEMO< ARCS, 400, 5000 > MArcs;   // arcs of circles
+GMEMO< BUMP, 500, 3000 > MBump;   // pairs of arcs, to bump into each other
 
-GMEMO< CONT, 40, 5000 > MCont;   // contour, one piece of line
-GMEMO< BISC, 60, 5000 > MBisc;   // angular bisector
+GMEMO< CONT, 400, 5000 > MCont;   // contour, one piece of line
+GMEMO< BISC, 600, 5000 > MBisc;   // angular bisector
 
 //GMEMO< OPPS, 10, 1000 > MOpps;   // 2 peeks from opposite appearence
 
