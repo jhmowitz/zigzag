@@ -1,5 +1,5 @@
 // prc_tim.h -- time definitions for PROCESS
-//              guard a minimal time value being latger than a starting one
+//              guard a minimal time value being larger than a starting one
 
 class GTIM {                        // -- guard time integrity of a check
 public:

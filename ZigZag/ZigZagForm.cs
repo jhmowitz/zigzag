@@ -624,7 +624,7 @@ namespace ZigZag
 
     protected override bool ProcessDialogKey(Keys keyData)
     {
-      Debug.WriteLine("{0}: {1}", Control.ModifierKeys.ToString(), keyData.ToString());
+      // Debug.WriteLine("{0}: {1}", Control.ModifierKeys.ToString(), keyData.ToString());
 
       // Translate keyData to DOS-compatbile keystrokes here
 

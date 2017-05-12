@@ -131,9 +131,9 @@ BOOL TSSL::tstOmittance() {          // -- test point index for omittance
 #undef MAX_OMIT
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - TSSTHR
-COLOR AttCol = LRd, NegCol = LGn,   // color of attention or of neglect
-      TriCol = LMa,                 // for tesselation points: triangles,
-      SqrCol = LCn, HexCol = LBe;   // squares or hexagons
+MYCOLOR AttCol = LRd, NegCol = LGn,   // color of attention or of neglect
+        TriCol = LMa,                 // for tesselation points: triangles,
+        SqrCol = LCn, HexCol = LBe;   // squares or hexagons
 
 void TSSTHR::ShowUp() {          // -- draw tesselation throw to visual page
    ScreenInit();                    // reset Mp, Radi
@@ -314,7 +314,7 @@ void TSSTHR::SetTessela() {
                                     t->Dens, t->nT, obj, t->NPrt, t->rBeg );
 }
 
-void TSSTHR::TesselTriSqr( REAL Off, COLOR Col ) {
+void TSSTHR::TesselTriSqr( REAL Off, MYCOLOR Col ) {
    TessCol = Col;
    VEC2 Vx = UnitVec2( l->RotT )     * l->UnitDist( 0.95*Radi );
    VEC2 Vy = UnitVec2( l->RotT+Off ) * l->UnitDist( 0.95*Radi );
@@ -435,7 +435,7 @@ void TSSTHR::ApplyV( pPNT2 p ) {
    if( Subm ) MakeDoubleV( p, Dir, Dev, FALSE, FALSE );
 }
 
-void TSSTHR::DrawP( pPNT2 p, COLOR Col ) {         // draw point
+void TSSTHR::DrawP( pPNT2 p, MYCOLOR Col ) {         // draw point
    INT2 x, y; SetPixel( p, x, y );
    if( l == t ) {                    // loop tess. equals attention tess.
       PutPixel( x+1, y,   Col );
@@ -445,7 +445,7 @@ void TSSTHR::DrawP( pPNT2 p, COLOR Col ) {         // draw point
    }
    PutPixel( x, y, Col );
 }
-void TSSTHR::DrawV( pPNT2 p, REAL D, COLOR Col ) {         // draw point
+void TSSTHR::DrawV( pPNT2 p, REAL D, MYCOLOR Col ) {         // draw point
    INT2 x, y; SetPixel( p, x, y );
    if( l == t ) {                    // loop tess. equals attention tess.
            if( D < _PI   /8 ) PutPixel( x+1, y,   LWe );
@@ -464,8 +464,8 @@ void TSSTHR::DrawV( pPNT2 p, REAL D, COLOR Col ) {         // draw point
 void TSSTHR::DrawFrame() {
    INT2 i;
    if( DubF ) {
-      COLOR C0 = ( IxT == 0 ) ? AttCol : NegCol;
-      COLOR C1 = ( IxT == 1 ) ? AttCol : NegCol;
+      MYCOLOR C0 = ( IxT == 0 ) ? AttCol : NegCol;
+      MYCOLOR C1 = ( IxT == 1 ) ? AttCol : NegCol;
       if( Frme == CIRC_F ) {                           // draw circle
          SetColor( C0 ); DrawC( &Mp, Radi, 120 );      // big
          SetColor( C1 ); DrawC( &Mp, RFac*Radi, 70 );  // small

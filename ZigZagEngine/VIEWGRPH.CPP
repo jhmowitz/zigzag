@@ -118,7 +118,7 @@ public:
       REAL R = ( p->X - LowX() ) * PixRge.X; x = (INT2)R;
            R = ( HigY() - p->Y ) * PixRge.Y; y = (INT2)R;
    }
-   void PutPix( pPNT2 p, COLOR Col ) {   // put one pixel, if inside
+   void PutPix( pPNT2 p, MYCOLOR Col ) {       // put one pixel, if inside
       if( Inner(p) ) { FlatMap( p ); PutPixel( X, Y, Col ); }
    }
    void MovTo( pPNT2 p ) { FlatMap( p ); MOVETO( X, Y ); }
@@ -295,7 +295,7 @@ void VDOM::ClipShear( pPNT2 p, pPNT2 q ) {
    }
 }
 
-void VDOM::ClipEnter( pPNT2 o, pPNT2 i ) {    // i is inside, o is outside
+void VDOM::ClipEnter( pPNT2 o, pPNT2 i ) {    // o is outside, i is inside
    MovTo( &( *o + (*i-*o)*LIN_CLIP::Enter(o,i) ) );
    LinTo( i );
 }
@@ -328,15 +328,19 @@ void VDOM::DrawClipArcs( BOOL XClip ) { // draw arcs "roughly" inside the screen
 
    for( INT2 i = 0; i < nArcs(); i++ ) {
       ARCLIN AL( HigBound(i)-LowBound(i), Rad(), PixRge.X/NofLINPIXELS, NofARCLINES );
-      if( AL.nLn <= 0 ) continue;
+      if( AL.nLn < 0 ) continue;
+	  if (AL.nLn == 0) {
+		  //if( Inner(mdP()) ) PutPixel( (INT2)(mdP()->X), (INT2)(QQmdP()->Y), LGy);
+		  continue;
+	  }
 
       P[W=0] = *mdP() + UnitVec2( LowBound(i) ) * Rad(); // first point
       curIn = Inner( &P[W] );
       if( curIn ) MovTo( &P[W] );
 
       for( INT2 k = 1; k <= AL.nLn; k++ ) {              // line pieces to draw arc
-         P[W=1-W] = *mdP()                               // trailing point(s)
-                  + UnitVec2( LowBound(i)+k*AL.Stp ) * Rad();
+		                                                 // trailing point(s)
+		 P[W = 1 - W] = *mdP() + UnitVec2(LowBound(i) + k*AL.Stp) * Rad();
          prvIn = curIn;
          curIn = Inner( &P[W] );
          DrawFurther( prvIn, &P[1-W], curIn, &P[W], XClip );
@@ -384,7 +388,7 @@ void IMAGO::InitImago( BOOL reset ) {      // -- initialize Imago ( after VDom.I
 
 BOOL IMAGO::Parse( INT2 c ) {
    switch( c ) {
-      case DRAW_MODE:                      // 'M': change draw mode
+      case DRAW_MODE:                      // 'alt_m': change draw mode (-50)
          DrwC = !DrwC; return TRUE;
 
       case NEXT_GENERA:                    // 'g': draw next generation
@@ -509,7 +513,7 @@ void Draw2Pages( REAL Tim ) {             // VGALO or VGAMED: draw on two pages
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - modules containing MakePS
-void DrawPnt( pPNT2 p, COLOR C, MskP mP ) {
+void DrawPnt( pPNT2 p, MYCOLOR C, MskP mP ) {
    VDom.PutPix( p, C );
 #ifdef   __MAKE_PSF__                     // -- if program is enabled to make PS-file
    if( MakePS.DoDraw ) MakePS.Point( p, mP );
