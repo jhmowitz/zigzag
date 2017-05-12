@@ -23,7 +23,7 @@ public:
    REAL Enter( pPNT2, pPNT2 );                 // enter cadre
 };
 
-#ifdef _MOW_CLIP_CPP                // ! include sources maar niet heus
+#ifdef _MOW_CLIP_CPP                // ! include sources
 
 BOOL LIN_CLIP::Inner( pPNT2 p ) {   // test inside cadre
    return (BOOL)( LowX() < p->X && p->X < HigX() &&
