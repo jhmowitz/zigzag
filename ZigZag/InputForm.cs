@@ -53,5 +53,10 @@ namespace ZigZag
 
       this.DialogResult = System.Windows.Forms.DialogResult.OK;
     }
+
+    private void inputTextBox_TextChanged(object sender, EventArgs e)
+    {
+      okButton.Enabled = (inputTextBox.Text.Length > 0);
+    }
   }
 }

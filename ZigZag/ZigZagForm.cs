@@ -600,6 +600,8 @@ namespace ZigZag
       using (InputForm f = new InputForm(prompt))
       {
         f.ShowDialog(this);
+        if (string.IsNullOrEmpty(f.Input))
+          return 0;
         return double.Parse(f.Input);
       }
     }
@@ -608,8 +610,6 @@ namespace ZigZag
       return Path.Combine(this._dataPath, name);
     }
         #endregion
-        // Arno: hier gaat iets fout als de "m" is aangetikt, waarna het inputform een getal (magnification factor) vraagt, en als dat dan leeg blijft!
-        // de fouten-procedure zou dan niet in werking moeten worden gezet en het proces zou gewoon vervolgd moeten worden
 
         #region "Keyboard handling"
         //protected override void OnKeyDown(KeyEventArgs e)
