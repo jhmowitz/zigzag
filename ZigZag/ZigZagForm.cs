@@ -113,7 +113,7 @@ namespace ZigZag
 
       this._dataPath = dataFolder;
     }
-
+// arno: bij het debuggen met F11 kom ik telkens hier terug, zonder dat ik het inputscherm te zien krijg...
     void Application_Idle(object sender, EventArgs e)
     {
       if (this._startOnNextIdle)
@@ -603,26 +603,27 @@ namespace ZigZag
         return double.Parse(f.Input);
       }
     }
-
     string IZigZagHost.MakeDataFileName(string name)
     {
       return Path.Combine(this._dataPath, name);
     }
-    #endregion
+        #endregion
+        // Arno: hier gaat iets fout als de "m" is aangetikt, waarna het inputform een getal (magnification factor) vraagt, en als dat dan leeg blijft!
+        // de fouten-procedure zou dan niet in werking moeten worden gezet en het proces zou gewoon vervolgd moeten worden
 
-    #region "Keyboard handling"
-    //protected override void OnKeyDown(KeyEventArgs e)
-    //{
-    //  base.OnKeyDown(e);
+        #region "Keyboard handling"
+        //protected override void OnKeyDown(KeyEventArgs e)
+        //{
+        //  base.OnKeyDown(e);
 
-    //  if (!e.Handled)
-    //  {
-    //    e.SuppressKeyPress = true;
-    //    this.QueueKey(e);
-    //  }
-    //}
+        //  if (!e.Handled)
+        //  {
+        //    e.SuppressKeyPress = true;
+        //    this.QueueKey(e);
+        //  }
+        //}
 
-    protected override bool ProcessDialogKey(Keys keyData)
+        protected override bool ProcessDialogKey(Keys keyData)
     {
       // Debug.WriteLine("{0}: {1}", Control.ModifierKeys.ToString(), keyData.ToString());
 

@@ -219,7 +219,7 @@ void NotifyEvent(pCONSTCHAR event, pCONSTCHAR message)
  */
 void ReadString(pCHAR s, pCONSTCHAR prompt)
 {
-	INT2 n = STRLEN(s);
+	INT2 n = (INT2)STRLEN(s);
 
 	String^ result = HOST->ReadString(gcnew String(prompt), n);
   pin_ptr<const CHAR> p = PtrToStringChars(result);

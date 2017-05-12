@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Mowitz Software")]
 [assembly: AssemblyProduct("ZigZag")]
-[assembly: AssemblyCopyright("Copyright © Joachim Mowitz 1993 - 2013")]
+[assembly: AssemblyCopyright("Copyright © Joachim Mowitz 1993 - 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
