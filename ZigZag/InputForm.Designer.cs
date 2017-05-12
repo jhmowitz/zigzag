@@ -36,9 +36,10 @@
       // promptLabel
       // 
       this.promptLabel.AutoSize = true;
-      this.promptLabel.Location = new System.Drawing.Point(13, 13);
+      this.promptLabel.Location = new System.Drawing.Point(17, 16);
+      this.promptLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.promptLabel.Name = "promptLabel";
-      this.promptLabel.Size = new System.Drawing.Size(45, 13);
+      this.promptLabel.Size = new System.Drawing.Size(62, 17);
       this.promptLabel.TabIndex = 0;
       this.promptLabel.Text = "(prompt)";
       // 
@@ -46,17 +47,21 @@
       // 
       this.inputTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-      this.inputTextBox.Location = new System.Drawing.Point(16, 30);
+      this.inputTextBox.Location = new System.Drawing.Point(21, 37);
+      this.inputTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.inputTextBox.Name = "inputTextBox";
-      this.inputTextBox.Size = new System.Drawing.Size(477, 20);
+      this.inputTextBox.Size = new System.Drawing.Size(635, 22);
       this.inputTextBox.TabIndex = 1;
+      this.inputTextBox.TextChanged += new System.EventHandler(this.inputTextBox_TextChanged);
       // 
       // okButton
       // 
       this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.okButton.Location = new System.Drawing.Point(417, 65);
+      this.okButton.Enabled = false;
+      this.okButton.Location = new System.Drawing.Point(556, 80);
+      this.okButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.okButton.Name = "okButton";
-      this.okButton.Size = new System.Drawing.Size(75, 23);
+      this.okButton.Size = new System.Drawing.Size(100, 28);
       this.okButton.TabIndex = 2;
       this.okButton.Text = "OK";
       this.okButton.UseVisualStyleBackColor = true;
@@ -65,14 +70,15 @@
       // InputForm
       // 
       this.AcceptButton = this.okButton;
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(505, 100);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+      this.ClientSize = new System.Drawing.Size(673, 123);
       this.ControlBox = false;
       this.Controls.Add(this.okButton);
       this.Controls.Add(this.inputTextBox);
       this.Controls.Add(this.promptLabel);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+      this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "InputForm";
