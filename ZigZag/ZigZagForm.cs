@@ -583,7 +583,7 @@ namespace ZigZag
         string s = f.Input;
         if (s.Length > maxlength)
           s = s.Substring(maxlength);
-        return s; //test test
+        return s; //test
 
       }
     }
