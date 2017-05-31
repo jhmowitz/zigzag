@@ -583,7 +583,8 @@ namespace ZigZag
         string s = f.Input;
         if (s.Length > maxlength)
           s = s.Substring(maxlength);
-        return s;
+        return s; //test
+
       }
     }
 
@@ -592,7 +593,7 @@ namespace ZigZag
       using (InputForm f = new InputForm(prompt))
       {
         f.ShowDialog(this);
-        return short.Parse(f.Input);
+        return short.Parse(f.Input);// test test
       }
     }
     double IZigZagHost.ReadReal(string prompt)
