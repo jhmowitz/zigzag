@@ -125,8 +125,8 @@ BOOL TSSL::tstOmittance() {          // -- test point index for omittance
    return FALSE;                        // point is left in tesselation
 }
 #undef MIN_DENS
-#undef MIN_DENS
 #undef MAX_DENS
+#undef MIN_PERT
 #undef MAX_PERT
 #undef MAX_OMIT
 
