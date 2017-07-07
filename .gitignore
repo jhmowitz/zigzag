@@ -14,3 +14,5 @@
 /ZigZag.NET.VC.db
 /ZigZag.NET.VC.VC.opendb
 /ZigZag.NET.v12.suo
+*.cache
+/.vs
