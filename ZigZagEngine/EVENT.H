@@ -65,9 +65,9 @@ void EVENT::SetEvent() {
       askEvent( Bubb.Cct, CirCTC, Bubb.curGen() );  // .. contacts
    }
 
-   askEmerg( ZgZg.Emg, TriEMG );                    // emergence of a triangle
-   askEvent( ZgZg.Dis, TriDIS );                    // disintegration of a contour
-   askEvent( ZgZg.Cct, TriCTC );                    // contact of a bisector
+   askEmerg( ZgZg_O.Emg, TriEMG );                    // emergence of a triangle
+   askEvent( ZgZg_O.Dis, TriDIS );                    // disintegration of a contour
+   askEvent( ZgZg_O.Cct, TriCTC );                    // contact of a bisector
 }
 
 EVENT Event;                       // current event

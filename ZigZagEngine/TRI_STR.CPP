@@ -22,9 +22,9 @@ extern void PrintTest( pCHAR, ... );
 //    pop it from its queue of events and
 //    initialize a class declaration that executes itself
 
-void DoTriEmerge() { T_WEAVE W( (pCLOS)ZgZg.Emg->Pop() ); } // an emergence
-void DoTriContct() { TCONTCT C( (pBISC)ZgZg.Cct->Pop() ); } // a contact
-void DoTriDisint() { TDISINT D( (pCONT)ZgZg.Dis->Pop() ); } // a disintegration
+void DoTriEmerge() { T_WEAVE W( (pCLOS)ZgZg_O.Emg->Pop() ); } // an emergence
+void DoTriContct() { TCONTCT C( (pBISC)ZgZg_O.Cct->Pop() ); } // a contact
+void DoTriDisint() { TDISINT D( (pCONT)ZgZg_O.Dis->Pop() ); } // a disintegration
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - general conditional
 INT2 ErrSig = -7;            // number of significant positions for testing ?? waarom 7
@@ -67,7 +67,7 @@ void EARLY::SetInteg( pBISC b ) {
 void EARLY::SetEvent() {                 // init for best peek of bTry
    if( !Act ) return;                    // no peek for bTry
    if( bTry->Event != NULL ) {           // if present .. rid old event
-      ZgZg.Cct->ridEvnt( bTry, _T("EARLY::SetEvent()") );
+      ZgZg_O.Cct->ridEvnt( bTry, _T("EARLY::SetEvent()") );
       bTry->Peek->PCnt--;                // .. diminish peek count
    }
 
@@ -79,7 +79,7 @@ void EARLY::SetEvent() {                 // init for best peek of bTry
    bTry->BisPt( bTry->Event, Lim );      // .. at this location
    bTry->Peek = Peek;                    // .. peeks this contour
    bTry->Peek->PCnt++;                   // .. keep up peek count of contour
-   ZgZg.Cct->ordEvnt( bTry );            // link bTry into ZgZg.Cct sequence
+   ZgZg_O.Cct->ordEvnt( bTry );            // link bTry into ZgZg.Cct sequence
 }
 
 // -- control appearence of opposite contour directions (dir with dir+pi or dir-pi)
@@ -165,8 +165,8 @@ T_WEAVE::T_WEAVE( pCLOS pN ) {
 
       EARLY::SetInteg( C.b );                     // initialize for peeking
 
-      pCLOS p = ZgZg.Act;                         // loop over all polygons
-      while( (p=(pCLOS)p->Next()) != ZgZg.Act ) {
+      pCLOS p = ZgZg_O.Act;                         // loop over all polygons
+      while( (p=(pCLOS)p->Next()) != ZgZg_O.Act ) {
          SUPPT A( p );
          do DirectGrab( A.c ); while( A.prev() );
       }
@@ -184,8 +184,8 @@ T_WEAVE::T_WEAVE( pCLOS pN ) {
 
       EARLY::SetInteg( R.b );                     // initialize for peeking
 
-      pCLOS p = ZgZg.Act;                         // loop over all polygons
-      while( (p=(pCLOS)p->Next()) != ZgZg.Act ) {
+      pCLOS p = ZgZg_O.Act;                         // loop over all polygons
+      while( (p=(pCLOS)p->Next()) != ZgZg_O.Act ) {
          SUPPT A( p );
          do DirectGrab( A.c ); while( A.prev() );
       }
@@ -198,8 +198,8 @@ T_WEAVE::T_WEAVE( pCLOS pN ) {
    } while( R.prev() );
 
    // try active bisectors with contours of new polygon
-   pCLOS p = ZgZg.Act;
-   while( (p=(pCLOS)p->Next()) != ZgZg.Act ) {
+   pCLOS p = ZgZg_O.Act;
+   while( (p=(pCLOS)p->Next()) != ZgZg_O.Act ) {
       SUPPT A( p );
       do {
          if( A.b->Type == BVANE ) continue;
@@ -216,8 +216,8 @@ T_WEAVE::T_WEAVE( pCLOS pN ) {
    }
 
    // put the two parts of the polygon into the sequence of all polygons
-   ZgZg.Act->SequenceIn( newC );
-   ZgZg.Act->SequenceIn( newR );
+   ZgZg_O.Act->SequenceIn( newC );
+   ZgZg_O.Act->SequenceIn( newR );
 }
 
 // -- check bTry to peek contour c
@@ -257,7 +257,7 @@ pBISC HOOK::Unify( pCONT c1, pBISC b1,             // even out one HOOK
    c1->valot( b1, b2 );                 // other than b1 becomes b2 for c1
                                      // -- take over valid information
    if( c2->PCnt > 0 ) {                 // if present, reset peeks to c2 to c1
-      pBISC x = (pBISC)ZgZg.Cct;
+      pBISC x = (pBISC)ZgZg_O.Cct;
       while( c2->PCnt > 0 && (x=(pBISC)x->Next()) != NULL )
          if( x->Peek == c2 ) {
             x->Peek = c1;
@@ -285,7 +285,7 @@ void HOOK::DiesOut( pCONT c ) {         // check contour to disintegrate
         DH = B2.Head.RelDis( &B1 );                  // distance of B2 to B1 (Head)
    c->Event = Get_Tisp( Prcs.T+DT/(DT-DH) );         // new time/space, set time
    c->Event->IncidP( &B1, &B2 );                     // set space
-   ZgZg.Dis->ordEvnt( c );                           // link c into disintegration queue
+   ZgZg_O.Dis->ordEvnt( c );                           // link c into disintegration queue
 }
 
 void HOOK::reActiv( pCONT c, pBISC b ) {        // (re)activate adjacing bisectors
@@ -293,13 +293,13 @@ void HOOK::reActiv( pCONT c, pBISC b ) {        // (re)activate adjacing bisecto
    else if( b->Event == NULL ) UniqueLeft( b ); // push bisector b uniquely at Left
    else if( c->Event != NULL )
       if( b->Event->TimB >= c->Event->TimB ) {
-         ZgZg.Cct->ridEvnt( b, _T("HOOK::reActiv()") );
+         ZgZg_O.Cct->ridEvnt( b, _T("HOOK::reActiv()") );
          b->Peek->PCnt--;                       // diminish peek count
       }
 }
 
 void HOOK::Repare() {
-   pBISC a = (pBISC)ZgZg.Cct, n;
+   pBISC a = (pBISC)ZgZg_O.Cct, n;
    while( (n=(pBISC)a->Next()) != NULL ) {
       BOOL IsNeigh = FALSE,
            IsInval = FALSE;
@@ -339,8 +339,8 @@ BOOL HOOK::validParam( pBISC b ) {
 void HOOK::Few_b_Peek_Many_c() {             // b in Left peek c not in cExcp[]
    while( !Left.Empty() ) {
       EARLY::SetInteg( (pBISC)Left.Pop() );  // initialize for peeking
-      pCLOS p = ZgZg.Act;
-      while( (p=(pCLOS)p->Next()) != ZgZg.Act ) {
+      pCLOS p = ZgZg_O.Act;
+      while( (p=(pCLOS)p->Next()) != ZgZg_O.Act ) {
          SUPPT S( p );
          do if( NotIn(S.c) ) Compare( S.c );
          while( S.prev() );
@@ -358,8 +358,8 @@ BOOL HOOK::NotIn( pCONT c ) {
 }
 
 void HOOK::Many_b_Peek_Few_c() {          // all b not in bExcp[] peeks c in cExcp[]
-   pCLOS p = ZgZg.Act;
-   while( (p=(pCLOS)p->Next()) != ZgZg.Act ) {
+   pCLOS p = ZgZg_O.Act;
+   while( (p=(pCLOS)p->Next()) != ZgZg_O.Act ) {
       SUPPT S( p );
       do if( NotIn(S.b) && S.b->Type != BVANE ) {
             EARLY::SetInteg( S.b );       // initialize for peeking
@@ -409,7 +409,7 @@ pCONT HOOK::same_iD( pBISC b, pCONT c ) {
 
 void HOOK::ClearPeeks( pCONT c ) {      // clear all peeks of contour
    if( c->PCnt == 0 ) return;
-   pBISC a = (pBISC)ZgZg.Cct, n;
+   pBISC a = (pBISC)ZgZg_O.Cct, n;
    while( c->PCnt > 0 && (n=(pBISC)a->Next()) != NULL )
       if( n->Peek == c ) {
          Rid_Tisp( n->Event );
@@ -468,7 +468,7 @@ pCLOS TCONTCT::ClearEgoPeeks( pCLOS pol ) {
    SUPPT Cnt( oth );
    do if( Cnt.b->Event != NULL ) nPeek++; while( Cnt.prev() );
 
-   pLINK cur = ZgZg.Cct;                   // search the queue for peeks of oth
+   pLINK cur = ZgZg_O.Cct;                   // search the queue for peeks of oth
    pBISC nxt;
    while( nPeek > 0 && (nxt=(pBISC)cur->Next()) != NULL )
       if( nxt->Ident == oth ) {
@@ -489,7 +489,7 @@ void TCONTCT::ClearEgoGrabs( pCLOS oth ) {
    SUPPT Cnt( oth );
    do nGrab += Cnt.c->PCnt; while( Cnt.prev() );
 
-   pLINK cur = ZgZg.Cct;
+   pLINK cur = ZgZg_O.Cct;
    pBISC nxt;
    while( nGrab > 0 && (nxt=(pBISC)cur->Next()) != NULL )
       if( nxt->Peek->Bis1->Ident == oth ) {
@@ -515,9 +515,9 @@ void TCONTCT::ClearEgoGrabs( pCLOS oth ) {
 void TCONTCT::clearBis() {
    if( Prcs.Evt ) ShowEvent( TRIANG, o, ECTCT, _T("Contact") );
 
-   if( b->Peek->Event != NULL ) ZgZg.Dis->ridEvnt( b->Peek, _T("TCONTCT::clearBis( b->Peek )") );
-   if( b->Cnt1->Event != NULL ) ZgZg.Dis->ridEvnt( b->Cnt1, _T("TCONTCT::clearBis( b->Cnt1 )") );
-   if( b->Cnt2->Event != NULL ) ZgZg.Dis->ridEvnt( b->Cnt2, _T("TCONTCT::clearBis( b->Cnt2 )") );
+   if( b->Peek->Event != NULL ) ZgZg_O.Dis->ridEvnt( b->Peek, _T("TCONTCT::clearBis( b->Peek )") );
+   if( b->Cnt1->Event != NULL ) ZgZg_O.Dis->ridEvnt( b->Cnt1, _T("TCONTCT::clearBis( b->Cnt1 )") );
+   if( b->Cnt2->Event != NULL ) ZgZg_O.Dis->ridEvnt( b->Cnt2, _T("TCONTCT::clearBis( b->Cnt2 )") );
 }
 
 BOOL TCONTCT::PeekPeek() {                        // handle peeks between two bisectors
@@ -545,11 +545,11 @@ BOOL TCONTCT::PeekPeek() {                        // handle peeks between two bi
       else if( Prcs.TOn ) ShowEvent( TRIANG, bx->Event, PEEK0, _T("PeekPeek") );
 
       // ## deze omgewerkt tot weak extra convergence ??
-      ZgZg.Cct->ridEvnt( bx, _T("TCONTCT::PeekPeek( bx )") );
+      ZgZg_O.Cct->ridEvnt( bx, _T("TCONTCT::PeekPeek( bx )") );
       bx->Peek->PCnt--;
    }
                                          // clear contour (last one)
-   if( csam->Event != NULL ) ZgZg.Dis->ridEvnt( csam, _T("TCONTCT::PeekPeek( csam )") );
+   if( csam->Event != NULL ) ZgZg_O.Dis->ridEvnt( csam, _T("TCONTCT::PeekPeek( csam )") );
                                          // reconnect and classify HOOKS
    pCONT both = b->other( bsam );
    b1 = HOOK::Classify( both, both->other(b), grab, grab->other(bx), o );
@@ -596,7 +596,7 @@ void TCONTCT::connectPoly() {                // (dis)connect polygons
    else {                                    // split polygon into two
       pl_c = Get_Clos();                     // get second polygon
       RevalPoly( pl_c, b2 );                 // revalue polygon with b2
-      ZgZg.Act->SequenceIn( pl_c );          // put pl_c into working sequence
+      ZgZg_O.Act->SequenceIn( pl_c );          // put pl_c into working sequence
    }
 }
 
@@ -648,7 +648,7 @@ BOOL TDISINT::Converge() {
    // prepare for convergence: rid all events of polygon, clear all peeks to polygon
    SUPPT Prep( pol );
    do {
-      if( Prep.c->Event != NULL ) ZgZg.Dis->ridEvnt( Prep.c, _T("TDISINT::Converge( Prep.c )") );
+      if( Prep.c->Event != NULL ) ZgZg_O.Dis->ridEvnt( Prep.c, _T("TDISINT::Converge( Prep.c )") );
       HOOK::ClearPeeks( Prep.c );        // clear all peeks of contour
    }
    while( Prep.prev() );
@@ -694,21 +694,21 @@ void TDISINT::Clr_Half( INT2 W ) {
                                           // -- get rid of attached events
    while( c != die ) {
       if( c->Event == NULL || diffEvent(ori,c->Event) ) break;
-      ZgZg.Dis->ridEvnt( c, _T("TDISINT::Clr_Half( c in loop )") );
+      ZgZg_O.Dis->ridEvnt( c, _T("TDISINT::Clr_Half( c in loop )") );
       if( b->Event != NULL ) {
          Message( L"Clr_Half() -- erase bisector event" );
-         ZgZg.Cct->ridEvnt( b, _T("TDISINT::Clr_Half( b in loop )") );
+         ZgZg_O.Cct->ridEvnt( b, _T("TDISINT::Clr_Half( b in loop )") );
          b->Peek->PCnt--;                    // diminish peek count
       }
       b = c->other( b );
       c = b->other( c );
    }
    if( b->Event != NULL ) {
-      ZgZg.Cct->ridEvnt( b, _T("TDISINT::Clr_Half( b afterwards )") );
+      ZgZg_O.Cct->ridEvnt( b, _T("TDISINT::Clr_Half( b afterwards )") );
       b->Peek->PCnt--;                       // diminish peek count
    }
    if( c->Event != NULL )
-      ZgZg.Dis->ridEvnt( c, _T("TDISINT::Clr_Half( c afterwards )") );
+      ZgZg_O.Dis->ridEvnt( c, _T("TDISINT::Clr_Half( c afterwards )") );
                                           // -- get rid of structures
    if( W == 1 ) { c1 = c; b1 = b; }
    else         { c2 = c; b2 = b; }

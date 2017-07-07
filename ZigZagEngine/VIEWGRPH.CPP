@@ -616,7 +616,7 @@ void DrawBis( pCLOS p ) {  // draw bisector line last 20% up to Prcs.D (presence
 }
                                                                         // ! no prototype
 void SDrw_PeekBisc() {           // draw peeking bisectors from (current) drawing time
-   pBISC b = (pBISC)ZgZg.Cct;    // .. up to some future time T
+   pBISC b = (pBISC)ZgZg_O.Cct;    // .. up to some future time T
    while( (b=(pBISC)b->Next()) != NULL ) {         // piece of bisector line
       REAL T = ( Prcs.S > Prcs.X ) ? ( Prcs.D + 5 * Prcs.S )
                                    : ( Prcs.D + 3 * Prcs.X );
@@ -645,14 +645,14 @@ void ScrDrawTriContours() {               // -- draw all polygons
    if( !NoColor && ExColor )
       SDrw_PeekBisc();                       // if requested, draw all peeks
 
-   pCLOS p = ZgZg.Act;
-   while( (p=p->Prev) != ZgZg.Act )
+   pCLOS p = ZgZg_O.Act;
+   while( (p=p->Prev) != ZgZg_O.Act )
       DrawPol( p, L_MEDI );                  // clip/draw the whole polygon
 }
 
 void ScrDrawTriBisectors() {
-   pCLOS p = ZgZg.Act;
-   while( (p=p->Prev) != ZgZg.Act )
+   pCLOS p = ZgZg_O.Act;
+   while( (p=p->Prev) != ZgZg_O.Act )
       DrawBis( p );                          // draw current bisector
 }
 

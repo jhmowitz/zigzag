@@ -41,7 +41,7 @@ void InitClasses() {
    MCont.Reset(); MBisc.Reset(); // MOpps.Reset();
 
    Bubb.ClearTops();             // clear tops of BUBBLE
-   ZgZg.ClearTops();             // clear tops of ZIGZAG
+   ZgZg_O.ClearTops();             // clear tops of ZIGZAG
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - HANDC
@@ -142,7 +142,7 @@ void MakePoly( INT2 N, pREAL arcs, pTISP o ) {  // -- init a new component
    pCLOS p_ref = Make1Poly( N, arcs, _PI, o );     // init reflective part
    p_con->AEgo = p_ref;                            // triangles refer to each other
    p_ref->AEgo = p_con;
-   ordClosure( p_con, ZgZg.Emg );                  // link polygon into emergence queue
+   ordClosure( p_con, ZgZg_O.Emg );                  // link polygon into emergence queue
 
 /*
    FILE *tlst = fopen( "test.lst", "a" );
@@ -221,7 +221,7 @@ void MakeDoubleV( pPNT2 p, REAL Dir, REAL Dev, BOOL Conv1c, BOOL Conv2c ) {
 
    RevalPoly( pol, b );                  // revalue polygon
    BlendPoly( pol, Tim );                // determine types of contors/bisectors
-   ordClosure( pol, ZgZg.Emg );          // link polygon into emergence queue
+   ordClosure( pol, ZgZg_O.Emg );          // link polygon into emergence queue
 }
 
 void RevalPoly( pCLOS p, pBISC bNew ) {  // revalue polygon
@@ -476,19 +476,19 @@ void TEST::EvTable() {
       if( TOn ) FPRINTF( ShwC, L"    memo  idle actv lost    memo  idle actv lost" );
    }
 
-   PRINTF( L"\n\nEmergence  %5d %5d", Bubb.Emg->NN(), ZgZg.Emg->NN() );
+   PRINTF( L"\n\nEmergence  %5d %5d", Bubb.Emg->NN(), ZgZg_O.Emg->NN() );
    if( ToFile ) 
-      FPRINTF( ShwC, L"\n\nEmergence  %5d %5d", Bubb.Emg->NN(), ZgZg.Emg->NN() );
+      FPRINTF( ShwC, L"\n\nEmergence  %5d %5d", Bubb.Emg->NN(), ZgZg_O.Emg->NN() );
    if( TOn ) PrintNClass( ECONV );     // check for lost components/polygons
 
-   PRINTF( L"\n\nDisintegr. %5d %5d", N_CD(), ZgZg.Dis->NN() );
+   PRINTF( L"\n\nDisintegr. %5d %5d", N_CD(), ZgZg_O.Dis->NN() );
    if( ToFile ) 
-      FPRINTF( ShwC, L"\n\nDisintegr. %5d %5d", N_CD(), ZgZg.Dis->NN() );
+      FPRINTF( ShwC, L"\n\nDisintegr. %5d %5d", N_CD(), ZgZg_O.Dis->NN() );
    if( TOn ) PrintNClass( EDISI );     // check for lost arcs/contours
 
-   PRINTF( L"\n\nContact    %5d %5d", N_CC(), ZgZg.Cct->NN() );
+   PRINTF( L"\n\nContact    %5d %5d", N_CC(), ZgZg_O.Cct->NN() );
    if( ToFile ) 
-      FPRINTF( ShwC, L"\n\nContact    %5d %5d", N_CC(), ZgZg.Cct->NN() );
+      FPRINTF( ShwC, L"\n\nContact    %5d %5d", N_CC(), ZgZg_O.Cct->NN() );
    if( TOn ) PrintNClass( ECTCT );     // check for lost (point) bisectors
    if( TOn ) PrintNTisp();             // print lost time/spaces
 
@@ -513,7 +513,7 @@ void TEST::EvTable() {
 // -------------------------------------------------------------------------- count numbers
 BOOL CheckNClass() {                         // check for lost classes
    INT2 Lc = Bubb.Emg->NN(),
-        Lt = ZgZg.Emg->NN(),
+        Lt = ZgZg_O.Emg->NN(),
         ME = MassZEmg();
 
    if( MClos.N_() != MClos.NS()+NComp()+Lc
@@ -542,8 +542,8 @@ INT2 NRefEvent() {                           // count all (Event) time/spaces
          do if( S.c->Event != NULL ) N++; while( S.next() );
       }
    }
-   pCLOS p = ZgZg.Act;
-   while( (p=p->Prev) != ZgZg.Act ) {
+   pCLOS p = ZgZg_O.Act;
+   while( (p=p->Prev) != ZgZg_O.Act ) {
       SUPPT T( p );
       do { if( T.c->Event != NULL ) N++;         // .. contour disintegrations
            if( T.b->Event != NULL ) N++; } while( T.prev() ); // .. peeks
@@ -552,10 +552,10 @@ INT2 NRefEvent() {                           // count all (Event) time/spaces
 }
 INT2 NTopEvent() {            // count all (Events from tops) time/spaces
    return N_CD() + N_CC() +                // .. or from tops: arcs
-          ZgZg.Dis->NN() + ZgZg.Cct->NN(); // .. triangles
+          ZgZg_O.Dis->NN() + ZgZg_O.Cct->NN(); // .. triangles
 }
 INT2 NOrign() {                      // count all (Orign) time/spaces
-   INT2  N = Bubb.Emg->NN() + ZgZg.Emg->NN();
+   INT2  N = Bubb.Emg->NN() + ZgZg_O.Emg->NN();
    pINT2 Cf = new INT2[Prcs.XO];
    INT2 i, A;
    for( i = 0; i < Prcs.XO; i++ ) Cf[i] = 0;
@@ -571,8 +571,8 @@ INT2 NOrign() {                      // count all (Orign) time/spaces
       for( i = 0; i < Prcs.XO; i++ )
          if( Cf[i]%(i+1) != 0 ) Exit( L"NOrign(Cir) .. incomplete" );
    }
-   pCLOS p = ZgZg.Act;
-   while( (p=p->Prev) != ZgZg.Act ) {
+   pCLOS p = ZgZg_O.Act;
+   while( (p=p->Prev) != ZgZg_O.Act ) {
       SUPPT T( p );
       do {
          if( (A=T.b->Orign->nRef) < 1 ) Exit( L"NOrign(Tri) .. nRef == 0" );
@@ -614,19 +614,19 @@ INT2 MassComp() {                // N of arcs in all generations
 }
 INT2 NPoly() {                   // N of polygons in sequence
    INT2 N = 0;
-   pCLOS p = ZgZg.Act;
-   while( (p=p->Prev) != ZgZg.Act ) N++;
+   pCLOS p = ZgZg_O.Act;
+   while( (p=p->Prev) != ZgZg_O.Act ) N++;
    return N;
 }
 INT2 MassPoly() {                // N contours/bisectors in all polygons
    INT2  N = 0;
-   pCLOS p = ZgZg.Act;
-   while( (p=p->Prev) != ZgZg.Act ) N += VolPoly( p );
+   pCLOS p = ZgZg_O.Act;
+   while( (p=p->Prev) != ZgZg_O.Act ) N += VolPoly( p );
    return N;
 }
 INT2 MassZEmg() {               // M contours/bisectors in all polygons of emergence
    INT2  N = 0;
-   pCLOS p = (pCLOS)ZgZg.Emg;
+   pCLOS p = (pCLOS)ZgZg_O.Emg;
    while( (p=(pCLOS)p->Next()) != NULL ) N += VolPoly( p );
    return N;
 }
@@ -641,7 +641,7 @@ void PrintNClass( CTYP Which ) { // check for lost classes
          Sc = MClos.KB(); Ic = MClos.NS();                     // CIRCLE
          Ac = MClos.N_(); Nc = NComp() + Bubb.Emg->NN();
          St = MClos.KB(); It = MClos.NS();                     // TRIANG
-         At = MClos.N_(); Nt = NPoly() + ZgZg.Emg->NN();
+         At = MClos.N_(); Nt = NPoly() + ZgZg_O.Emg->NN();
          Dc = Dt = Nc + Nt;
          break;
       case EDISI:                                           // disintegrations
