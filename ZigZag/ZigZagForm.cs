@@ -21,7 +21,7 @@ namespace ZigZag
   /// </summary>
   public partial class ZigZagForm : Form, IZigZagHost
   {
-    #region "Member variables"
+    #region Member variables
     /// <summary>
     /// The engine we're hosting
     /// </summary>
@@ -35,7 +35,7 @@ namespace ZigZag
     protected bool _mouseDown = false;
     #endregion
 
-    #region "Graphics state"
+    #region Graphics state
     /*
      * The state variables for the graphics system, to support IZigZagHost
      */
@@ -84,7 +84,7 @@ namespace ZigZag
     protected string _dataPath;
     #endregion
 
-    #region "Keyboard state"
+    #region Keyboard state
     /*
      * State for the keyboard buffer
      */
@@ -113,7 +113,12 @@ namespace ZigZag
 
       this._dataPath = dataFolder;
     }
-// arno: bij het debuggen met F11 kom ik telkens hier terug, zonder dat ik het inputscherm te zien krijg...
+
+    // arno: bij het debuggen met F11 kom ik telkens hier terug, zonder dat ik het inputscherm te zien krijg...
+    // MT: Deze methode wordt doorlopend aangeroepen terwijl het programma draait, maar wordt eigenlijk alleen
+    // gebruikt om de achterliggende ZigZagEngine te starten als dat nodig is. (this._startOnNextIdle).
+    // Met F11 komt je er dus inderdaad in terecht - hij wordt immers aangeroepen. Dat is inherent aan de structuur
+    // van het programma
     void Application_Idle(object sender, EventArgs e)
     {
       if (this._startOnNextIdle)
@@ -269,7 +274,21 @@ namespace ZigZag
       this.ConsoleTextBox.Text += message;
     }
 
-    #region "ZigZagHost implementation"
+    protected void StartStopEngine()
+    {
+      if (this._engine == null)
+      {
+        this._startOnNextIdle = true;
+      }
+      else
+      {
+        // Stop the engine by sending ESC
+        this.QueueKey(27);
+        this.QueueKey(27);
+      }
+    }
+
+    #region ZigZagHost implementation
 
     /*
      * This class supplies the methods that the ZigZagEngine needs
@@ -521,7 +540,7 @@ namespace ZigZag
     short IZigZagHost.getch()
     {
       // Return the character code of the key pressed. Blocking!
-      for (; ; )
+      for (;;)
       {
         if (this._keyboardBuffer.Count > 0)
         {
@@ -610,21 +629,21 @@ namespace ZigZag
     {
       return Path.Combine(this._dataPath, name);
     }
-        #endregion
+    #endregion
 
-        #region "Keyboard handling"
-        //protected override void OnKeyDown(KeyEventArgs e)
-        //{
-        //  base.OnKeyDown(e);
+    #region Keyboard handling
+    //protected override void OnKeyDown(KeyEventArgs e)
+    //{
+    //  base.OnKeyDown(e);
 
-        //  if (!e.Handled)
-        //  {
-        //    e.SuppressKeyPress = true;
-        //    this.QueueKey(e);
-        //  }
-        //}
+    //  if (!e.Handled)
+    //  {
+    //    e.SuppressKeyPress = true;
+    //    this.QueueKey(e);
+    //  }
+    //}
 
-        protected override bool ProcessDialogKey(Keys keyData)
+    protected override bool ProcessDialogKey(Keys keyData)
     {
       // Debug.WriteLine("{0}: {1}", Control.ModifierKeys.ToString(), keyData.ToString());
 
@@ -718,7 +737,8 @@ namespace ZigZag
             newKey = 43;
             break;
           default:
-            if (charCode >= 'a' && charCode <= 'z') {
+            if (charCode >= 'a' && charCode <= 'z')
+            {
               newKey = atozalt[Convert.ToInt16(charCode) - Convert.ToInt16('a')];
             }
             break;
@@ -744,7 +764,7 @@ namespace ZigZag
     }
     #endregion
 
-    #region "UI event handlers"
+    #region UI event handlers
 
     /// <summary>
     /// Handle clicking the Test button
@@ -816,69 +836,6 @@ namespace ZigZag
     {
       StartStopEngine();
     }
-    #endregion
-
-    #region "Control panel events"
-    private void checkBoxF_CheckedChanged(object sender, EventArgs e)
-    {
-      this.QueueKey((short)('F'));
-    }
-
-    private void checkBoxK_CheckedChanged(object sender, EventArgs e)
-    {
-      this.QueueKey((short)('K'));
-    }
-
-    private void buttonUp_Click(object sender, EventArgs e)
-    {
-      this.QueueKey((short)('y'));
-    }
-
-    private void buttonDown_Click(object sender, EventArgs e)
-    {
-      this.QueueKey((short)('Y'));
-    }
-
-    private void buttonLeft_Click(object sender, EventArgs e)
-    {
-      this.QueueKey((short)('X'));
-    }
-
-    private void buttonRight_Click(object sender, EventArgs e)
-    {
-      this.QueueKey((short)('x'));
-    }
-
-    private void buttonZoomOut_Click(object sender, EventArgs e)
-    {
-      this.QueueKey((short)('s'));
-    }
-
-    private void buttonZoomIn_Click(object sender, EventArgs e)
-    {
-      this.QueueKey((short)('S'));
-    }
-
-    private void checkBoxPaused_CheckedChanged(object sender, EventArgs e)
-    {
-      this.QueueKey((short)('!'));
-    }
-    #endregion
-
-    protected void StartStopEngine()
-    {
-      if (this._engine == null)
-      {
-        this._startOnNextIdle = true;
-      }
-      else
-      {
-        // Stop the engine by sending ESC
-        this.QueueKey(27);
-        this.QueueKey(27);
-      }
-    }
-
     private void screenContextMenuStrip_Opening(object sender, System.ComponentModel.CancelEventArgs e)
     {
       this._mousePosition = Control.MousePosition;
@@ -986,5 +943,53 @@ namespace ZigZag
     {
       this.mainStatusStrip.Visible = this.statusBarToolStripMenuItem.Checked;
     }
+    #endregion
+
+    #region Control panel events
+    private void checkBoxF_CheckedChanged(object sender, EventArgs e)
+    {
+      this.QueueKey((short)('F'));
+    }
+
+    private void checkBoxK_CheckedChanged(object sender, EventArgs e)
+    {
+      this.QueueKey((short)('K'));
+    }
+
+    private void buttonUp_Click(object sender, EventArgs e)
+    {
+      this.QueueKey((short)('y'));
+    }
+
+    private void buttonDown_Click(object sender, EventArgs e)
+    {
+      this.QueueKey((short)('Y'));
+    }
+
+    private void buttonLeft_Click(object sender, EventArgs e)
+    {
+      this.QueueKey((short)('X'));
+    }
+
+    private void buttonRight_Click(object sender, EventArgs e)
+    {
+      this.QueueKey((short)('x'));
+    }
+
+    private void buttonZoomOut_Click(object sender, EventArgs e)
+    {
+      this.QueueKey((short)('s'));
+    }
+
+    private void buttonZoomIn_Click(object sender, EventArgs e)
+    {
+      this.QueueKey((short)('S'));
+    }
+
+    private void checkBoxPaused_CheckedChanged(object sender, EventArgs e)
+    {
+      this.QueueKey((short)('!'));
+    }
+    #endregion
   }
 }
