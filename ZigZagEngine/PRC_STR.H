@@ -46,7 +46,7 @@ public:
 class CLOS: public LINK {
 public:
    pCLOS Prev;                         // previous in working order (opposite to Next())
-   pCLOS AEgo;                         // the other triangle ! triangles only
+//   pCLOS AEgo;                         // the other triangle ! triangles only             // #####
 
    pIDNT Bound;                        // entry to boundary: ARCS (component), BISC (polygon)
 

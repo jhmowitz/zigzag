@@ -179,8 +179,8 @@ public:
 };
 
 EXTERN HANDC Bubb;         // to control generation handling of arcs
-EXTERN HANDT ZgZg_N;       // to control non-generation handling of lines
-EXTERN HANDT ZgZg_O;       // to control non-generation handling of lines
+EXTERN HANDT ZgZg0;        // to control non-generation handling of lines
+EXTERN HANDT ZgZg1;        // to control non-generation handling of lines
 EXTERN PROCS Prcs;         // to handle time of process and graphics
 
 #undef EXTERN
