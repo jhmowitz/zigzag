@@ -40,7 +40,8 @@ public:
    }
 };
 
-#define    XGENS     100               // maximum number of generations
+// ##### 2018-01-05
+#define    XGENS     1000              // maximum number of generations
 class HANDC {                       // -- to support handling generations of components
    // tops of structural elements
    GENC GComp[XGENS];                  // classes for headers of generations
@@ -178,9 +179,11 @@ public:
    REAL Flip() { return (REAL)F * _PI; }   // additional direction according to F
 };
 
-EXTERN HANDC Bubb;         // to control generation handling of arcs
-EXTERN HANDT ZgZg0;        // to control non-generation handling of lines
-EXTERN HANDT ZgZg1;        // to control non-generation handling of lines
+// ##### 2018-01-05
 EXTERN PROCS Prcs;         // to handle time of process and graphics
+EXTERN HANDC Bubb;         // to control generation handling of arcs
+EXTERN HANDT ZgZg0;        // to control non-generation handling of lines : (0 * _PI) continuing
+EXTERN HANDT ZgZg1;        // to control non-generation handling of lines : (1 * _PI) reflecting 
+EXTERN HANDT *zgzg;        // to use for ZgZg0 or ZgZg1
 
 #undef EXTERN

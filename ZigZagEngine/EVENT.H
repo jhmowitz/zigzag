@@ -2,9 +2,11 @@
 #ifndef _EVENT_H
 #define _EVENT_H
 
+// ##### 2018-01-05
 enum EVTYP {                           // type of disintegration, bump or emergence
    CirDIS, CirCTC, CirEMG,             // for circlres
-   TriDIS, TriCTC, TriEMG,             // for triangles
+   TriDIS0, TriCTC0, TriEMG0,          // for triangles continuing
+   TriDIS1, TriCTC1, TriEMG1,          // for triangles reflecting
    noEVNT = -1                         // or no event is to occur
 };
 
@@ -42,15 +44,27 @@ extern void DoTriEmerge();        // emerging of a triangle
 extern void DoTriContct();        // contact of a bisector with a contour
 extern void DoTriDisint();        // disintegration of a contour
 
+// ##### 2018-01-05
 void EVENT::ExcEvent() {          // execute event and look for next one
    if( Act ) {                    // do event
       switch( EvTyp ) {
-         case CirDIS: Bubb.setGen( Gener ); DoCirDisint(); break;
-         case CirCTC: Bubb.setGen( Gener ); DoCirContct(); break;
-         case CirEMG: Bubb.setGen( Gener ); DoCirEmerge(); break;
-         case TriDIS:                       DoTriDisint(); break;
-         case TriCTC:                       DoTriContct(); break;
-         case TriEMG:                       DoTriEmerge(); break;
+                                              // handle circles
+         case CirDIS: Bubb.setGen( Gener );   // set generation
+                      DoCirDisint(); break;   // handle desintegration
+         case CirCTC: Bubb.setGen( Gener );   // set generation 
+                      DoCirContct(); break;   // handle peek
+         case CirEMG: Bubb.setGen( Gener );   // set generation
+                      DoCirEmerge(); break;   // handle emergence
+
+                                               // handle triangles continuing
+         case TriDIS0: DoTriDisint(); break;      // handle desintegration
+         case TriCTC0: DoTriContct(); break;      // handle contact/peek
+         case TriEMG0: DoTriEmerge(); break;      // handle emergence
+                                           
+                                               // handle triangles reflecting
+//         case TriDIS1: DoTriDisint(); break;      // handle desintegration
+//         case TriCTC1: DoTriContct(); break;      // handle contact/peek
+//         case TriEMG1: DoTriEmerge(); break;      // handle emergence
       }
    }
    SetEvent();                     // next event from any queue
@@ -65,9 +79,9 @@ void EVENT::SetEvent() {
       askEvent( Bubb.Cct, CirCTC, Bubb.curGen() );  // .. contacts
    }
 
-   askEmerg( ZgZg1.Emg, TriEMG );                    // emergence of a triangle
-   askEvent( ZgZg1.Dis, TriDIS );                    // disintegration of a contour
-   askEvent( ZgZg1.Cct, TriCTC );                    // contact of a bisector
+   askEmerg( ZgZg1.Emg, TriEMG0 );                    // emergence of a triangle
+   askEvent( ZgZg1.Dis, TriDIS0 );                    // disintegration of a contour
+   askEvent( ZgZg1.Cct, TriCTC0 );                    // contact of a bisector
 }
 
 EVENT Event;                       // current event

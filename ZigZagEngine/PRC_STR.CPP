@@ -80,7 +80,7 @@ void TISP::decRef() {                  // decrement number of references
 // ---------------------------------------------------------------------- handle closures
 pCLOS Get_Clos() {                  // -- get a new closure
    pCLOS cls = MClos.Get();            // get closure from store ! no pointer clearance
-   // #####   cls->AEgo = NULL;                   // no other closure yet
+   // ##### 25-11-2017   cls->AEgo = NULL;                   // no other closure yet
    cls->Bound = NULL;                  // no arc yet
    return cls;
 }
@@ -125,7 +125,7 @@ pCLOS Make1Poly( INT2 N, pREAL arcs, REAL Flip, pTISP o ) { // init part of a ne
 
    c[0] = c1 = Get_Cont( o, ContourDir(arcs[0]+Flip) );
    for( INT2 i = 0, w = 0; i < N; i++, w = 1 - w ) {
-      INT2 j = ( i + 1 ) % N;            // next of i // #####
+      INT2 j = ( i + 1 ) % N;            // next of i // ##### 25-11-2017
                                          // use next contour or first one again
       c[1-w] = ( j != 0 ) ? Get_Cont( o, ContourDir(arcs[j]+Flip) ) : c1;
       b = Get_Bisc( o, c[w], c[1-w] );   // get bisector
@@ -138,12 +138,12 @@ pCLOS Make1Poly( INT2 N, pREAL arcs, REAL Flip, pTISP o ) { // init part of a ne
 }
 
 void MakePoly( INT2 N, pREAL arcs, pTISP o ) {  // -- init a new component
-// ##### 25-11-2017  pCLOS p_con = Make1Poly( N, arcs, 0.0, o );     // init continous part
-   pCLOS p_con = Make1Poly( N, arcs, _PI, o);     // init continous part
- // #####  pCLOS p_ref = Make1Poly( N, arcs, _PI, o );     // init reflective part
- // #####  p_con->AEgo = p_ref;                            // triangles refer to each other
- // #####  p_ref->AEgo = p_con;
-   ordClosure( p_con, ZgZg1.Emg );                  // link polygon into emergence queue
+   //pCLOS p_con = Make1Poly( N, arcs, 0.0, o );     // init continous part
+   pCLOS p_ref = Make1Poly( N, arcs, _PI, o );     // init reflective part
+   // ##### 25-11-2017  p_con->AEgo = p_ref;                            // triangles refer to each other
+   // ##### 25-11-2017  p_ref->AEgo = p_con;
+   //ordClosure( p_con, ZgZg1.Emg );                  // link polygon into emergence queue
+   ordClosure(p_ref, ZgZg1.Emg);                  // link polygon into emergence queue
 
 /*
    FILE *tlst = fopen( "test.lst", "a" );
