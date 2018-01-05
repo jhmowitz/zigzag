@@ -140,7 +140,7 @@ pCLOS Make1Poly( INT2 N, pREAL arcs, REAL Flip, pTISP o ) { // init part of a ne
 void MakePoly( INT2 N, pREAL arcs, pTISP o ) {  // -- init a new component
    //pCLOS p_con = Make1Poly( N, arcs, 0.0, o );     // init continous part
    pCLOS p_ref = Make1Poly( N, arcs, _PI, o );     // init reflective part
-   // ##### 25-11-2017  p_con->AEgo = p_ref;                            // triangles refer to each other
+   // ##### 25-11-2017  p_con->AEgo = p_ref;                            // triangles refer to each other  
    // ##### 25-11-2017  p_ref->AEgo = p_con;
    //ordClosure( p_con, ZgZg1.Emg );                  // link polygon into emergence queue
    ordClosure(p_ref, ZgZg1.Emg);                  // link polygon into emergence queue
