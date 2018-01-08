@@ -44,7 +44,8 @@ extern void DoTriEmerge();        // emerging of a triangle
 extern void DoTriContct();        // contact of a bisector with a contour
 extern void DoTriDisint();        // disintegration of a contour
 
-// ##### 2018-01-05
+  // ##### 2018-01-08   remove comments
+  // ##### 2018-01-05   program into comments
 void EVENT::ExcEvent() {          // execute event and look for next one
    if( Act ) {                    // do event
       switch( EvTyp ) {
@@ -57,14 +58,14 @@ void EVENT::ExcEvent() {          // execute event and look for next one
                       DoCirEmerge(); break;   // handle emergence
 
                                                // handle triangles continuing
-         case TriDIS0: DoTriDisint(); break;      // handle desintegration
-         case TriCTC0: DoTriContct(); break;      // handle contact/peek
-         case TriEMG0: DoTriEmerge(); break;      // handle emergence
+         case TriEMG0: DoTriEmerge(); break;      // emergence
+         case TriDIS0: DoTriDisint(); break;      // desintegration
+         case TriCTC0: DoTriContct(); break;      // contact/peek
                                            
                                                // handle triangles reflecting
-//         case TriDIS1: DoTriDisint(); break;      // handle desintegration
-//         case TriCTC1: DoTriContct(); break;      // handle contact/peek
-//         case TriEMG1: DoTriEmerge(); break;      // handle emergence
+         case TriEMG1: DoTriEmerge(); break;      // emergence
+         case TriDIS1: DoTriDisint(); break;      // desintegration
+         case TriCTC1: DoTriContct(); break;      // contact/peek
       }
    }
    SetEvent();                     // next event from any queue
@@ -79,9 +80,13 @@ void EVENT::SetEvent() {
       askEvent( Bubb.Cct, CirCTC, Bubb.curGen() );  // .. contacts
    }
 
-   askEmerg( ZgZg1.Emg, TriEMG0 );                    // emergence of a triangle
-   askEvent( ZgZg1.Dis, TriDIS0 );                    // disintegration of a contour
-   askEvent( ZgZg1.Cct, TriCTC0 );                    // contact of a bisector
+   askEmerg(ZgZg0.Emg, TriEMG0);                    // emergence of a triangle
+   askEvent(ZgZg0.Dis, TriDIS0);                    // disintegration of a contour
+   askEvent(ZgZg0.Cct, TriCTC0);                    // contact of a bisector
+
+   askEmerg( ZgZg1.Emg, TriEMG1 );                  // emergence of a triangle
+   askEvent( ZgZg1.Dis, TriDIS1 );                  // disintegration of a contour
+   askEvent( ZgZg1.Cct, TriCTC1 );                  // contact of a bisector
 }
 
 EVENT Event;                       // current event
