@@ -35,7 +35,7 @@ typedef class BISC *    pBISC;             // to an angular bisector
 // -- definition of a time/space
 class TISP: public PNT2, public LINK {
 public:
-   REAL TimB;                              // time of birth
+   REAL TimB;                              // time of birth (or death)
    INT2 nRef;                              // number of references to this point as origin
 
    void incRef();                          // increment nRef to this
@@ -45,8 +45,8 @@ public:
 // -- definition of a component (of arcs) or polygon (of contours)
 class CLOS: public LINK {
 public:
-   pCLOS Prev;                         // previous in working order (opposite to Next())
-//   pCLOS AEgo;                         // the other triangle ! triangles only             // #####
+   pCLOS Prev;                      // previous in working order (opposite to Next())
+//   pCLOS AEgo;                      // the other triangle ! triangles only  // 25-11-2017 #####
 
    pIDNT Bound;                        // entry to boundary: ARCS (component), BISC (polygon)
 
@@ -64,8 +64,8 @@ public:
 // -- definition of a BASIC class to link events of class EVNT in order of time
 class ETOP: public LINK {
 public:
-   void ordEvnt( pEVNT );                                     // link actor into time order
-   void getEvnt( pLINK, pCHAR = _T("no string into getEvnt()") ); // delink actor from time order
+   void ordEvnt( pEVNT );                                 // link actor into time order (TO)
+   void getEvnt( pLINK, pCHAR = _T("no string into getEvnt()") ); // delink actor from TO
    void ridEvnt( pEVNT, pCHAR = _T("no string into getEvnt()") ); // delink from TO, rid Event
 };
 

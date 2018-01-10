@@ -22,15 +22,15 @@
 // -- declaration of common memory control: bulk allocation of classes with storage
                               // -- guard memory classes for production classes
 //***** kan meer memory alloceren
-GMEMO< TISP, 6000, 5000 > MTisp;   // time/space
+GMEMO< TISP, 20000, 30000 > MTisp;   // time/space
 
 GMEMO< CLOS, 3000, 6000 > MClos;   // closures: components or polygons
 
-GMEMO< ARCS, 4000, 5000 > MArcs;   // arcs of circles
-GMEMO< BUMP, 5000, 5000 > MBump;   // pairs of arcs, to bump into each other
+GMEMO< ARCS, 8000, 8000 > MArcs;   // arcs of circles
+GMEMO< BUMP, 8000, 8000 > MBump;   // pairs of arcs, to bump into each other
 
-GMEMO< CONT, 4000, 5000 > MCont;   // contour, one piece of line
-GMEMO< BISC, 6000, 5000 > MBisc;   // angular bisector
+GMEMO< CONT, 12000, 10000 > MCont;   // contour, one piece of line
+GMEMO< BISC, 15000, 12000 > MBisc;   // angular bisector
 
 //GMEMO< OPPS, 10, 1000 > MOpps;   // 2 peeks from opposite appearence
 
@@ -41,7 +41,8 @@ void InitClasses() {
    MCont.Reset(); MBisc.Reset(); // MOpps.Reset();
 
    Bubb.ClearTops();             // clear tops of BUBBLE
-   ZgZg1.ClearTops();             // clear tops of ZIGZAG
+   ZgZg0.ClearTops();            // clear tops of continous triangles
+   ZgZg1.ClearTops();            // clear tops of reflected triangles
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - HANDC
@@ -138,11 +139,14 @@ pCLOS Make1Poly( INT2 N, pREAL arcs, REAL Flip, pTISP o ) { // init part of a ne
 }
 
 void MakePoly( INT2 N, pREAL arcs, pTISP o ) {  // -- init a new component
-   //pCLOS p_con = Make1Poly( N, arcs, 0.0, o );     // init continous part
-   pCLOS p_ref = Make1Poly( N, arcs, _PI, o );     // init reflective part
-   // ##### 25-11-2017  p_con->AEgo = p_ref;                            // triangles refer to each other  
+   // ##### 25-11-2017  p_con->AEgo = p_ref;        // dismantle triangles refering to each other  
    // ##### 25-11-2017  p_ref->AEgo = p_con;
-   //ordClosure( p_con, ZgZg1.Emg );                  // link polygon into emergence queue
+
+   pCLOS p_con = Make1Poly( N, arcs, 0.0, o );     // init continous part
+   ordClosure( p_con, ZgZg0.Emg );                 // link continuous polygon into emergence queue
+
+   // ##### 2018-01-08      p_con and p_ref;          // triangles appear in different spaces  
+   pCLOS p_ref = Make1Poly(N, arcs, _PI, o);      // init reflective part
    ordClosure(p_ref, ZgZg1.Emg);                  // link polygon into emergence queue
 
 /*

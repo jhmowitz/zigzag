@@ -16,13 +16,13 @@
       - HALFCIRCLE equals 1.8 billion
       - FULLCIRCLE equals 3.6 billion
 
-      A bisectors can use all values of the ENWS-domain, whereas a contour can only
+      A bisectors can use all values of the ENWS-domain, whereas a contour then only can
       use even values. By that it is assured, that two contours can always
       have a valid bisector between them except in two cases (to be avoided):
-      - two contours are parallel in the same direction (they differ NULLCIRCLE)
-        then they are identical or they have no incidence
-      - two contours are parallel in opposite directions (they differ HALFCIRCLE)
-        then the bisector has infinite velocity
+      (0) - two contours are parallel in the same direction (they differ NULLCIRCLE)
+            then they are identical or they have no incidence
+      (1) - two contours are parallel in opposite directions (they differ HALFCIRCLE)
+            then the bisector has infinite velocity, that cannot exist
 */
 
 #ifndef _DIRECT_H
@@ -43,8 +43,8 @@ class SSMDD {        // S(upport) S(pecially) M(odelled) D(iscrete) D(irections)
    REAL DirFactor;                     // divide HALFCIRCLE by 2pi
 public:
    SSMDD() {
-      ArcFactor = (REAL)TPI / FULLCIRCLE;
-      DirFactor = (REAL)HALFCIRCLE / TPI;
+      ArcFactor = (REAL)TPI / FULLCIRCLE;   // change Dir (ENWS) into Arc (REAL)
+      DirFactor = (REAL)HALFCIRCLE / TPI;   // Change Arc (REAL) into Dir (ENWS)S
    }
    REAL Dir2Arc() { return ArcFactor; }
    REAL Arc2Dir() { return DirFactor; }
@@ -110,9 +110,9 @@ ENWS AddDir( ENWS D1, ENWS D2 ) {      // addition of directions
 // -- from the directions of two neighboring contours
 //    compute the direction and the velocity of the bisector in between
 void VELO::DirVelo( ENWS D1, ENWS D2 ) {
-   // mean of directions of neighboring contours to compute direction
+   // mean of directions of neighboring contours to compute direction of a bisector
    iDir = MeanDir( D1, D2 );
-   // difference of directions of neighboring contours to compute velocity of bisector
+   // difference of directions of neighboring contours to compute velocity of a bisector
    VFac = 1.0 / cos( RealArc( HalfDiff(D1,D2) ) );
 }
 

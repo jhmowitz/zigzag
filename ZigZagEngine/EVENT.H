@@ -5,8 +5,8 @@
 // ##### 2018-01-05
 enum EVTYP {                           // type of disintegration, bump or emergence
    CirDIS, CirCTC, CirEMG,             // for circlres
-   TriDIS0, TriCTC0, TriEMG0,          // for triangles continuing
-   TriDIS1, TriCTC1, TriEMG1,          // for triangles reflecting
+   TriDIS0, TriCTC0, TriEMG0,          // 0 - for triangles continuing
+   TriDIS1, TriCTC1, TriEMG1,          // 1 - for triangles reflecting
    noEVNT = -1                         // or no event is to occur
 };
 
@@ -39,12 +39,16 @@ public:
 extern void DoCirEmerge();        // emergence of a circle
 extern void DoCirContct();        // contact of two arcs/circles
 extern void DoCirDisint();        // disintegration of an arc
-                               // -- from tri_str.cpp
-extern void DoTriEmerge();        // emerging of a triangle
-extern void DoTriContct();        // contact of a bisector with a contour
-extern void DoTriDisint();        // disintegration of a contour
+                               // -- events from continous triangles  #### 2018-01-10
+extern void DoTriEmerge0();       // emerging                         #### 2018-01-10
+extern void DoTriContct0();       // peeking                          #### 2018-01-10
+extern void DoTriDisint0();       // disintegration                   #### 2018-01-10
+                               // -- events from reflecting triangles #### 2018-01-10
+extern void DoTriEmerge1();       // emerging                         #### 2018-01-10
+extern void DoTriContct1();       // peeking                          #### 2018-01-10
+extern void DoTriDisint1();       // disintegration                   #### 2018-01-10
 
-  // ##### 2018-01-08   remove comments
+                                   // ##### 2018-01-08   remove comments
   // ##### 2018-01-05   program into comments
 void EVENT::ExcEvent() {          // execute event and look for next one
    if( Act ) {                    // do event
@@ -58,14 +62,14 @@ void EVENT::ExcEvent() {          // execute event and look for next one
                       DoCirEmerge(); break;   // handle emergence
 
                                                // handle triangles continuing
-         case TriEMG0: DoTriEmerge(); break;      // emergence
-         case TriDIS0: DoTriDisint(); break;      // desintegration
-         case TriCTC0: DoTriContct(); break;      // contact/peek
+         case TriEMG0: DoTriEmerge0(); break;      // emergence
+         case TriDIS0: DoTriDisint0(); break;      // desintegration
+         case TriCTC0: DoTriContct0(); break;      // contact/peek
                                            
                                                // handle triangles reflecting
-         case TriEMG1: DoTriEmerge(); break;      // emergence
-         case TriDIS1: DoTriDisint(); break;      // desintegration
-         case TriCTC1: DoTriContct(); break;      // contact/peek
+         case TriEMG1: DoTriEmerge1(); break;      // emergence
+         case TriDIS1: DoTriDisint1(); break;      // desintegration
+         case TriCTC1: DoTriContct1(); break;      // contact/peek
       }
    }
    SetEvent();                     // next event from any queue
