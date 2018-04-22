@@ -15,7 +15,7 @@
 #include "tri_str.h"            // definition of contour support class SUPPT
 #undef   _TRI_STR_CPP
 
-extern void ShowEvent( BZTYP, pPNT2, CTYP, pCHAR );
+// extern void ShowEvent( BZTYP, pPNT2, CTYP, pCHAR );
 extern void PrintTest( pCHAR, ... );
 
 //    #### 2018-01-10
@@ -160,8 +160,9 @@ T_WEAVE::T_WEAVE( pCLOS pN ) {
    pCLOS newC = pN;                               // emerging polygons: continuous(C)   <- not continuous anymore
         // ##### 25-11-2017 newR = pN->AEgo;      // reflecting(R)   // ##### 25-11-2017 
 
-   if( Prcs.Evt )                                 // show event on screen
-      ShowEvent( TRIANG, newC->Bound->Orign, EMERG, _T("Emergence") );
+   // ##### 2018-04-13
+   // if( Prcs.Evt )                                 // show event on screen
+   //   ShowEvent( TRIANG, newC->Bound->Orign, EMERG, _T("Emergence") );
 
    // try bisectors of new polygon with avtive contours
    SUPPT C( newC );
@@ -175,7 +176,6 @@ T_WEAVE::T_WEAVE( pCLOS pN ) {
          SUPPT A( p );
          do DirectGrab( A.c ); while( A.prev() );
       }
-
                                                   // ## only for "DoubleV"
 //      SUPPT C_( newC );                         // try bisectors of newC with itself
 //      do if( !Neighbors(C.b,C_.c) ) DirectGrab( C_.c ); while( C_.prev() );
@@ -449,7 +449,8 @@ TCONTCT::TCONTCT( pBISC i ): HOOK() { // -- handle one peek
 
    o = b->Event; b->ClearEvent();        // detach event and clear holder
 
-   // ##### 25-11-2017   RidEgoPeeks();                        // dismantle dual triangles of pl_b or pl_c
+   // ##### 25-11-2017  
+   // RidEgoPeeks();                        // dismantle dual triangles of pl_b or pl_c
    clearBis();                           // clear all contour events for b
    if( !PeekPeek() ) PeekCont();
    connectPoly();                        // (dis)connect polygons
@@ -524,7 +525,8 @@ void TCONTCT::ClearEgoGrabs( pCLOS oth ) {
 
 // -- clear all contour events (disintegrations) for bisector
 void TCONTCT::clearBis() {
-   if( Prcs.Evt ) ShowEvent( TRIANG, o, ECTCT, _T("Contact") );
+   // ##### 2018-04-13
+   // if( Prcs.Evt ) ShowEvent( TRIANG, o, ECTCT, _T("Contact") );
                                                                        // #### 2018-01-10
    if( b->Peek->Event != NULL ) zgzg->Dis->ridEvnt( b->Peek, _T("TCONTCT::clearBis( b->Peek )") );
    if( b->Cnt1->Event != NULL ) zgzg->Dis->ridEvnt( b->Cnt1, _T("TCONTCT::clearBis( b->Cnt1 )") );
@@ -539,21 +541,23 @@ BOOL TCONTCT::PeekPeek() {                        // handle peeks between two bi
    pCONT csam = bx->other( grab );                // the other part of a restored contour
    if( csam->Orign != bsam->Orign ) return FALSE; // try normal peek
 
-   if( bx->Event == NULL )
-      ShowEvent( TRIANG, bx->Event, nPEEK, _T("PeekPeek of one event") );
+   // ##### 2018-04-13
+   if (bx->Event == NULL)
+      ; //    ShowEvent( TRIANG, bx->Event, nPEEK, _T("PeekPeek of one event") );
    else {
       // ## bx->Peek must equal b->other(bsam) !!
       if( bx->Peek != b->other(bsam) )
          Message( L"TCONTCT::PeekPeek() ?? bx peeks into wrong contour" );
-      if( diffETime(o,bx->Event) ) {
-         if( Prcs.TOn ) { 
-            ShowEvent( TRIANG, o, PEEK1, _T("Peek ..") );
-            ShowEvent( TRIANG, bx->Event, PEEK2, _T(".. and not Peek") );
-         }
-      }
-      if( diffESite(o,bx->Event) )
-                          ShowEvent( TRIANG, bx->Event, nPEEK, _T("Peek<>Peek") );
-      else if( Prcs.TOn ) ShowEvent( TRIANG, bx->Event, PEEK0, _T("PeekPeek") );
+      // ##### 2018-04-13
+      // if( diffETime(o,bx->Event) ) {
+      //    if( Prcs.TOn ) { 
+      //       ShowEvent( TRIANG, o, PEEK1, _T("Peek ..") );
+      //       ShowEvent( TRIANG, bx->Event, PEEK2, _T(".. and not Peek") );
+      //    }
+      // }
+      // if( diffESite(o,bx->Event) )
+      //                     ShowEvent( TRIANG, bx->Event, nPEEK, _T("Peek<>Peek") );
+      // else if( Prcs.TOn ) ShowEvent( TRIANG, bx->Event, PEEK0, _T("PeekPeek") );
 
       // ## deze omgewerkt tot weak extra convergence ??
       zgzg->Cct->ridEvnt( bx, _T("TCONTCT::PeekPeek( bx )") );                              // #### 2018-01-10
@@ -650,11 +654,12 @@ BOOL TDISINT::Converge() {
    // ! at least three contours do not disintegrate at ori --> no convergence
    if( Neq+2 < NofC ) return FALSE;
 
+   // ##### 2018-04-13
    // handle incomplete convergence
-        if( Nev+1 <  NofC ) ShowEvent( TRIANG, ori, ATTND, _T("several events missing") );
-   else if( Nev+1 == NofC ) ShowEvent( TRIANG, ori, ATTND, _T("an event missing") );
-   else if( !CCv )          ShowEvent( TRIANG, ori, ATTND, _T("forced convergence") );
-   else if( Prcs.Evt )      ShowEvent( TRIANG, ori, ECONV, _T("Convergence") );
+   //      if( Nev+1 <  NofC ) ShowEvent( TRIANG, ori, ATTND, _T("several events missing") );
+   // else if( Nev+1 == NofC ) ShowEvent( TRIANG, ori, ATTND, _T("an event missing") );
+   // else if( !CCv )          ShowEvent( TRIANG, ori, ATTND, _T("forced convergence") );
+   // else if( Prcs.Evt )      ShowEvent( TRIANG, ori, ECONV, _T("Convergence") );
 
    // prepare for convergence: rid all events of polygon, clear all peeks to polygon
    SUPPT Prep( pol );
@@ -686,7 +691,8 @@ BOOL TDISINT::Converge() {
 }
 
 void TDISINT::Reach() {
-   if( Prcs.Evt ) ShowEvent( TRIANG, ori, EDISI, _T("Disintegration") );
+   // ##### 2018-04-13
+   // if( Prcs.Evt ) ShowEvent( TRIANG, ori, EDISI, _T("Disintegration") );
    Clr_Half( 1 );
    Clr_Half( 2 );
 
@@ -744,9 +750,11 @@ pBISC TDISINT::ClassifD() {
 
    // c1 and c2 have same direction and same origin ! they are from the same contour
    if( ori != NULL ) {
-      if( Prcs.TOn ) ShowEvent( TRIANG, ori, GLUED, _T("Contour restored") );
+      // ##### 2018-04-13
+      // if( Prcs.TOn ) ShowEvent( TRIANG, ori, GLUED, _T("Contour restored") );
       if( Prcs.ExtraEmer() ) MakeComp( ori );
       else                   Rid_Tisp( ori );
    }
    return HOOK::Unify( c1, b1, c2, b2 );
 }
+// End of File

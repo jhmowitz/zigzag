@@ -36,7 +36,7 @@ BOOL PROCS::ExtraEmer() {            // emergence at "loss of structure"
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - to hide TSSTHR TssThrw
 TSSTHR TssThrw;                     // throwing circles into "regular" tessalations
 RDMTHR RdmThrw;                     // to control "random" throwing of circles/triangles
-FILTHR FilThrw;                     // to control throwing from file data
+//FILTHR FilThrw;                     // to control throwing from file data ##### 2018-04-20
 
                                  // -- hide for prcmain.cpp
 BOOL TssThrowHandleKeys( INT2 c ) { // throw "regular" and "random" tesselations
@@ -146,7 +146,7 @@ BOOL TSSTHR::Parse( INT2 c ) {      // -- parse for "regular"and "random" tessel
    if( !On )                                      // -- is not active
       if( c == TESS_THROW ) { Init(); return TRUE; } // '.': activate tesselation throw
       else if( RdmThrw.Parse(c) ) return TRUE;       // throw "random" tesselation
-      else if( FilThrw.Parse(c) ) return TRUE;       // throw tesselation from file
+//      else if( FilThrw.Parse(c) ) return TRUE;       // throw tesselation from file ##### 2018-04-20
       else return FALSE;                             // arbitrary key is rejected
 
    // ! tesselation throw is active
@@ -495,6 +495,27 @@ void TSSTHR::DrawC( pPNT2 p, REAL R, INT2 n ) {    // draw circle
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - RDMTHR
+// ##### 2018-04-20
+   void RDMTHR::ThrMess( BOOL mess ) {    // give message of throwing
+   if (WhatC == CIRC_OFF) {               // throw triangles
+      if (WhatT == TRIA_ON2) {
+         WhatT = TRIA_OFF;       // no triangles
+         WhatC = CIRC_ON;        // throw circles
+      }
+      else WhatT = (ScrDrawTria)(WhatT + 1);  // throw other triangles
+   }
+   else {                                     // throw all triangles
+      WhatC = CIRC_OFF;
+      WhatT = TRIA_ON2;
+   }
+   if ( mess ) {
+           if( WhatC == CIRC_ON ) Message(L"Throw circles only . . o O !");
+      else if( WhatT == TRIA_ON0 ) Message(L"Throw REFLECTED triangles!");
+      else if( WhatT == TRIA_ON1 ) Message(L"Throw CONTINUOUS triangles!");
+      else if( WhatT == TRIA_ON2 ) Message(L"Throw ALL triangles!");
+   }
+}
+
 BOOL RDMTHR::Parse( INT2 c ) {           // -- throw a random configuration
    switch( c ) {
       case THR_RDM___1: ThrowIt( 1 );   return TRUE;  // '1': one circle/triangle
@@ -508,11 +529,16 @@ BOOL RDMTHR::Parse( INT2 c ) {           // -- throw a random configuration
       case THR_RDM_500: ThrowIt( 500 ); return TRUE;  // '9': .. or 500
 
       case THROW_WHICH:         // '*': toggle: circles/triangles throw
-         What = ( What == CTBOTH ) ? CIRCLE : (BZTYP)(What+1);
-              if( What == CTBOTH ) Message( L"Throw both!" );
-         else if( What == CIRCLE ) Message( L"Throw circles only . . o O !" );
-         else if( What == TRIANG ) Message( L"Throw triangles only <| <| !" );
+         // ##### 2018-04-18
+         //What = ( What == CTBOTH ) ? CIRCLE : (BZTYP)(What+1);
+         //     if( What == CTBOTH ) Message( L"Throw both!" );
+         //else if( What == CIRCLE ) Message( L"Throw circles only . . o O !" );
+         //else if( What == TRIANG ) Message( L"Throw triangles only <| <| !" );
+
+         // ##### 2018-04-20
+         ThrMess( TRUE );       // give message about which throwing
          return TRUE;
+
       case OPEN_FOLDED:         // '^': toggle: open or folded triangles
          Acut = !Acut;
          if( !Acut && nA > 3 ) nA = 3;
@@ -550,20 +576,26 @@ void RDMTHR::ThrowIt( INT2 N ) {
    midP = CadreMidPnt();                // get position of domain midpoint
    Xfac = HalfRangeX() / 2;             // get dispersion factors
    Yfac = HalfRangeY() / 2;
-   if ( What == CIRCLE || What == CTBOTH ) {        // throw circles
+   // ##### 2018-04-18
+   //if ( What == CIRCLE || What == CTBOTH ) {        // throw circles
+   if (WhatC == CIRC_ON ) {
       REAL T = Prcs.T + ( Prcs.S + Prcs.X ) * DISPERSE * ( N + 1 );
       for( INT2 I = 0; I < N; I++, T -= DISPERSE * ( Prcs.S + Prcs.X ) ) {
          MargVal( 0 );                  // ## test only
          MakeComp( Point(T) );
       }
    }
-   if ( What == TRIANG || What == CTBOTH ) {        // throw triangles
-      REAL T = Prcs.T + ( Prcs.S + Prcs.X ) * DISPERSE * ( N + 1 );
+   // ##### 2018-04-18 en
+   // ##### 2018-04-20
+   //if ( What == TRIANG || What == CTBOTH ) {        // throw triangles
+   if ( WhatT == TRIA_ON0 || WhatT == TRIA_ON2 ) {
+   REAL T = Prcs.T + ( Prcs.S + Prcs.X ) * DISPERSE * ( N + 1 );
       for( INT2 I = 0; I < N; I++, T -= DISPERSE * ( Prcs.S + Prcs.X ) ) {
          Angles( nA, Arcs );
          MakePoly( nA, Arcs, Point(T) );
       }
    }
+   // ##### 2018-04-22  if( WhatT == TRIA_ON1 || WhatT == TRIA_ON2 ) { wat gebeurt hiermee
 }
 
 pTISP RDMTHR::Point( REAL T ) {
@@ -598,7 +630,7 @@ void RDMTHR::Angles( INT2 n, pREAL a ) {  // generate random directions
 
 // ------------------------------------------------------------------------- MYFILE
 #include <string.h>                  // strchr()
-
+/*
 BOOL MYFILE::Open( pCHAR m ) {
    f = FOPEN( n, m );
    if( *m == 'r' )
@@ -697,7 +729,7 @@ void FILTHR::put_closures() {
    }
    Message( L"Retrieved %d cirkels, %d triangles", nC, nT );
 }
-
+*/
 #undef DISPERSE
 /*
 void FILTHR::set_minmax() {

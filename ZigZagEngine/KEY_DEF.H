@@ -184,7 +184,10 @@
    #define   PRV_SING_POLY   'z'          // previous polygon is single
 
    #define   DRAW_CADRE      -53          // toggle: draw cadre (alt_/)
-   #define   DRAW_WHICH      'W'          // draw circles, triangles or both
+   // ##### 2018-04-08 
+   //  #define   DRAW_WHICH      'W'          // draw circles, triangles or both
+   #define   DRAW_CIR        'W'          // draw circles
+   #define   DRAW_TRI        'w'          // draw triangles
 
    #define   SCRN_REPAINT    'R'          // toggle: screen repaint
    #define   ONCE_REPAINT    'r'          // repaint screen once

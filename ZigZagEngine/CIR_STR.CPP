@@ -11,7 +11,8 @@
 #include "cir_str.h"            // definition of arc support class SUPPC
 #undef   _CIR_STR_CPP
 
-extern void ShowEvent( BZTYP, pPNT2, CTYP, pCHAR );
+// ##### 2018-04-13
+extern void ShowEvent( ScrDrawCirc, ScrDrawTria, pPNT2, CTYP, pCHAR );
 extern void ShowCircle( pPNT2, REAL, REAL, REAL, CTYP, uINT2 );
 
 // -- pop the first event (of circles) from the event queue and execute it
@@ -21,7 +22,8 @@ void DoCirDisint() { CDISINT D( (pARCS)Bubb.Dis->Pop() ); } // a disintegration
 
 // ------------------------------------------------------------------------------ C_WEAVE
 void C_WEAVE::WeaveIn() {
-   if( Prcs.Evt ) ShowEvent( CIRCLE, cp, EMERG, _T("Emergence") );
+   // ##### 2018-04-13
+   // if( Prcs.Evt ) ShowEvent( CIRCLE, cp, EMERG, _T("Emergence") );
                                 // compute generation for component newC
    for( Bubb.init(); Bubb.valid(); Bubb.incr() )
       if( Outside() ) break;
@@ -159,7 +161,9 @@ void Appolonius( pARCS c, REAL Tim ) {
 
 // ------------------------------------------------------------------------------ C_CONTCT
 void CCONTCT::ConnectBump( pBUMP v ) {
-   if( Prcs.Evt ) ShowEvent( CIRCLE, v->Event, ECTCT, _T("Contact") );
+   // ##### 2018-04-13
+   // if( Prcs.Evt ) ShowEvent( CIRCLE, v->Event, ECTCT, _T("Contact") );
+
    Rid_Bump( v );                             // get rid of Bump and Event
    ConnectArcs();                             // break and cross-connect arcs
    ConnectComp();                             // (dis)connect components cmp1, cmp2
@@ -223,7 +227,8 @@ void CDISINT::DisintConver( pARCS c ) {    // event handling of a disintegration
    SUPPC Die( c, NEIGHBOUR, TimE );
    INT2  N = VolComp( Die.comp );
    if( N == 3 && ( Die.p->Event != NULL || Die.n->Event != NULL ) ) {
-      if( Prcs.Evt ) ShowEvent( CIRCLE, e, ECONV, _T("Convergence") );
+      // ##### 2018-04-13
+      // if( Prcs.Evt ) ShowEvent( CIRCLE, e, ECONV, _T("Convergence") );
 
       if( Die.n->Event != NULL )
          Bubb.Dis->ridEvnt( Die.n );
@@ -252,7 +257,8 @@ void CDISINT::DisintConver( pARCS c ) {    // event handling of a disintegration
    else Disintegrate( &Die );          // event of disintegration
 }
 void CDISINT::Disintegrate( SUPPC *die ) {     // event of disintegration
-   if( Prcs.Evt ) ShowEvent( CIRCLE, e, EDISI, _T("Disintegration") );
+   // ##### 2018-04-13
+   // if( Prcs.Evt ) ShowEvent( CIRCLE, e, EDISI, _T("Disintegration") );
                        // ## make extra polygon if requested
    if( Prcs.ExtraEmer() ) MakePoly( 3, ComputeDir(die,e), e );
    else Rid_Tisp( e );
@@ -262,3 +268,4 @@ void CDISINT::Disintegrate( SUPPC *die ) {     // event of disintegration
    if( die->p->BCnt == 0 ) Appolonius( die->p, TimE );
    if( die->n->BCnt == 0 ) Appolonius( die->n, TimE );
 }
+// End of File

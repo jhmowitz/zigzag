@@ -102,7 +102,12 @@ private:
 #define  XARCS    10     // maximum number of arcs (sides in polygon)
 
 class RDMTHR {        // -- definition of randomly emerging circles/triangles
-   BZTYP What;           // != TRIANG (circles) or != CIRCLE (triangles)
+
+   // ##### 2018-04-18
+   // BZTYP What;           // != TRIANG (circles) or != CIRCLE (triangles)
+   ScrDrawCirc WhatC;    // draw circles to screen
+   ScrDrawTria WhatT;    // draw triangles to screen
+
    pPNT2 midP;           // keeps domain midpoint from viewgrph.cpp
    REAL  Xfac, Yfac;     // extension factors around midpoint for throwing
    REAL  Marg;           // margin for random throwing
@@ -114,11 +119,17 @@ class RDMTHR {        // -- definition of randomly emerging circles/triangles
    BOOL  RandPars( INT2 );      // parameters to set random numbers
 
    void  ThrowIt( INT2 );       // create ..
+   // ##### 2018-04-20
+   void  ThrMess( BOOL );       // (give message about) throwing which
    pTISP Point( REAL );         // generate a random point
    void  Angles( INT2, pREAL ); // generate a number of random directions
 public:
    RDMTHR() {
-      What = CTBOTH;
+      // ##### 2018-04-18
+      //What = CTBOTH;
+      WhatC = CIRC_ON;
+      WhatT = TRIA_ON2;
+
       Acut = TRUE;
       Marg = 0.2;
       srand ( rBeg=0u );
@@ -128,8 +139,9 @@ public:
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - FILTHR
-#define  XTAG   100
 
+#define  XTAG   100
+/*
 class MYFILE {
    void tab_number();
    void fixTGClip();
@@ -162,5 +174,5 @@ public:
    BOOL Parse( INT2 );                // parse for throw of file configuration
    void put_closures();
 };
-
+*/
 #endif                 // _TSS_THR_H
