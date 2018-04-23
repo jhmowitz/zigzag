@@ -46,7 +46,7 @@ inline double pow10(double x)
 #include "mow_util\mow_type.h"       // ! later version
 
 // -- flags to include/exclude sources present in the application into/from the compiler
-#define __MAKE_PSF__                // program is enabled to make PS-file
+//#define __MAKE_PSF__                // program is enabled to make PS-file
 
 // -------------------------------------------------> PostScript-image representation
 #define  PS_MASK_H       "mow_util\ps_file\psf_mask.h"  // definitions of masking pattern
@@ -109,4 +109,4 @@ inline double pow10(double x)
  *    ! include only once into applicartion
  *    ! active inclusion of <new.h>
  */
-#define  MOW_LINK_CPP    "mow_util\memo\link_cpp.h" 
+#define  MOW_LINK_CPP    "mow_util\memo\link_cpp.h"

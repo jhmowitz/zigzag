@@ -17,7 +17,7 @@
 
 extern void DomainGraphInit( BOOL );    // set screen parameters: ratio
 extern void DomainCadreInit( BOOL );    // set screen parameters: ratio
-extern void ZoomTo(INT2 , INT2, REAL);	// viewgrph.cpp
+extern void ZoomTo( INT2, INT2, REAL ); // viewgrph.cpp
 
 // Implementations for graphics support
 // These methods use ZigZagEngine::Host to perform their task,

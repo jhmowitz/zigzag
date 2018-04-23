@@ -45,7 +45,11 @@ extern void TssThrowEpilog();       // finish tesselation throw, if requested
 class IMAGO {
    PNT2 Lup, Rdw, Rup, Ldw;  // points of cadre: left/right, up/down
 public:
-   BZTYP What;               // indication drawing circles, triangles or both
+   // ##### 2018-04-08 en
+   // ##### 2018-04-20
+   // BZTYP What;               // indication drawing circles, triangles or both
+   ScrDrawCirc WhatCir;      // draw (screen) circles
+   ScrDrawTria WhatTri;      // draw (screen) triangles 
    BOOL  Cadr, DrwC;         // draw cadres, draw on moment(contours) or a time interval
    BOOL  reP, ReP;           // to repaint (one) screen once or always
    uINT2 msDl;               // milliseconds for delay of displays
@@ -63,11 +67,19 @@ class VIEW {
 public:
    BOOL  On;
    REAL  LX, HX, LY, HY;    // min/max of X and Y of clip cadre
-   BZTYP BZ;                // indication drawing circles, triangles or both
+   // ##### 2018-04-08 
+   // BZTYP BZ;                // indication drawing circles, triangles or both
+   ScrDrawCirc D_Cir;          // indication drawing circles
+   ScrDrawTria D_Tri;          // indication drawing triangles
    VIEW() { On = FALSE; }
-   void init( BZTYP W, REAL Lx, REAL Hx, REAL Ly, REAL Hy ) {
+   // ##### 2018-04-08 
+   //void init(BZTYP W, REAL Lx, REAL Hx, REAL Ly, REAL Hy) {
+      void init( ScrDrawCirc Cir, ScrDrawTria Tri, REAL Lx, REAL Hx, REAL Ly, REAL Hy ) {
       On = TRUE;
-      BZ = W;
+      // ##### 2018-04-08 
+      // BZ = W;
+      D_Cir = Cir;
+      D_Tri = Tri;
       LX = Lx; HX = Hx;
       LY = Ly; HY = Hy;
    }
@@ -187,7 +199,7 @@ BOOL VDOM::Parse( INT2 c ) {                 // parse keybord for VDOM and IMAGO
 
    if( c <= INITAL_VIEW && c+N_VIEW > INITAL_VIEW ) {  // -104 (alt_F1): ! c is negative
       INT2 iV = INITAL_VIEW - c;
-      View[iV].init( IM.What, LowX(), HigX(), LowY(), HigY() );
+      View[iV].init( IM.WhatCir, IM.WhatTri , LowX(), HigX(), LowY(), HigY() );
       Message( L"View %d is initialled !", iV+1 );
       return TRUE;
    }
@@ -205,7 +217,10 @@ BOOL VDOM::Parse( INT2 c ) {                 // parse keybord for VDOM and IMAGO
          Message( L"View %d is not active !", iV+1 );
       else {
          VIEW *v = &View[iV];
-         IM.What = v->BZ;
+         // ##### 2018-04-12 (of eerder?)
+         IM.WhatCir = v->D_Cir;
+         IM.WhatTri = v->D_Tri;
+
          UpdCadre( v->LX, v->HX, v->LY, v->HY );           // update CADRE
          PixRge.X = ( N_PIXEL + GETMAXX() ) / Ranges()->X; // pixels per unit of x-data
          PixRge.Y = ( N_PIXEL + GETMAXY() ) / Ranges()->Y; // pixels per unit of y-data
@@ -372,7 +387,10 @@ void VDOM::DrawPolygon( pCLOS p ) {        // -- draw a polygon to screen
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - IMAGO
 void IMAGO::InitImago( BOOL reset ) {      // -- initialize Imago ( after VDom.Init() )
 	 if (reset) {
-		 What = CTBOTH;                 // draw both planes
+    // ##### 2018-04-08
+	 // What = CTBOTH;                 // draw both planes
+       WhatCir = CIRC_OFF;            // not drawing circles
+       WhatTri = TRIA_OFF;             // not drawing triagles
 		 DrwC = TRUE;                   // draw mode: contours (not bisectors)
 		 Cadr = FALSE;                  // draw cadre not
 		 ReP = TRUE;                    // repaint always
@@ -380,7 +398,7 @@ void IMAGO::InitImago( BOOL reset ) {      // -- initialize Imago ( after VDom.I
 		 SeeD = FALSE;                  // delay is not visible
 		 msDl = 5u;                     // ## delay for message
 	 }
-	 Lup.X = Ldw.X = 0.75 * VDom.LowX() + 0.25 * VDom.HigX();
+   Lup.X = Ldw.X = 0.75 * VDom.LowX() + 0.25 * VDom.HigX();
    Rdw.X = Rup.X = 0.25 * VDom.LowX() + 0.75 * VDom.HigX();
    Rdw.Y = Ldw.Y = 0.75 * VDom.LowY() + 0.25 * VDom.HigY();
    Lup.Y = Rup.Y = 0.25 * VDom.LowY() + 0.75 * VDom.HigY();
@@ -400,8 +418,14 @@ BOOL IMAGO::Parse( INT2 c ) {
 
       case DRAW_CADRE:                     // alt_/: draw fixed cadre (-53)
          Cadr = !Cadr; return TRUE;
-      case DRAW_WHICH:                     // 'W': which plane to draw
-         What = (What == CTBOTH) ? CIRCLE : (BZTYP)(What+1); return TRUE;
+     // ##### 2018-04-08
+     // case DRAW_WHICH:                     // 'W': which plane to draw
+     //    What = (What == CTBOTH) ? CIRCLE : (BZTYP)(What + 1); return TRUE;
+      case DRAW_CIR:                     // 'W': plane for circles to draw
+         WhatCir = ( WhatCir == CIRC_OFF ) ? CIRC_ON : CIRC_OFF; return TRUE;
+      case DRAW_TRI:                     // 'w': plane for triangles to draw -- Triangle number are bound to their sequence !
+         WhatTri = ( WhatTri == TRIA_ON2 ) ? TRIA_OFF : (ScrDrawTria)(WhatTri + 1); return TRUE;
+
       case ONCE_REPAINT:                   // 'r': repaint screen once
          reP = TWICE; return TRUE;
       case SCRN_REPAINT:                   // 'R': toggle: screen repaint
@@ -419,10 +443,15 @@ BOOL IMAGO::Parse( INT2 c ) {
 
 void IMAGO::Cadre() {
    if( !Cadr ) return;
-        if( NoColor )        SetColor( DGy );
-   else if( What == CIRCLE ) SetColor( LMa );
-   else if( What == TRIANG ) SetColor( LCn );
-   else                      SetColor( LWe );
+        if( NoColor ) SetColor( DGy );
+     // ##### 2018-04-08                               // ! de waarden van TRIA_ON1 en TRIA_ON2 zijn willekeurig
+     //   else if( What == CIRCLE ) SetColor( LMa );
+     //   else if( What == TRIANG ) SetColor( LCn );
+   else if( WhatCir == CIRC_ON ) SetColor( LMa );
+   else if( WhatTri == TRIA_ON0 ) SetColor( LCn );      // is deze kleur juist ?
+   else if (WhatTri == TRIA_ON1 ) SetColor( LCn );      // of deze ?
+   else if (WhatTri == TRIA_ON2 ) SetColor( LCn );               // en wat is hiermee ?
+   else                          SetColor( LWe );
    VDom.ClipALine( &Lup, &Rup );  VDom.ClipALine( &Rup, &Rdw );
    VDom.ClipALine( &Rdw, &Ldw );  VDom.ClipALine( &Ldw, &Lup );
 }
@@ -433,25 +462,48 @@ void ScrDrawCirContours();                      // circle contours of all genera
 void ScrDrawTriContours();                      // all triangular contours
 void ScrDrawTriBisectors();                     // all triangular bisectors
 
-void ExecuteScreenDraw( REAL T ) {           // -- make order of display and execute
+void ExecuteScreenDraw(REAL T) {           // -- make order of display and execute
    Prcs.D = T;                                  // set time for drawing
    TssThrowProlog();                            // initial tesselation throw, if requested
 
 #ifdef   __MAKE_PSF__                        // -- if program is enabled to make PS-file
-   MakePSDisplayProlog( IM.What );              // initial PostScript print
-   MakePSShowOptions( GETMAXX(), GETMAXY() );   // show PostScript options on screen
+   MakePSDisplayProlog(IM.What);              // initial PostScript print
+   MakePSShowOptions(GETMAXX(), GETMAXY());   // show PostScript options on screen
 #endif                                       // __MAKE_PSF__
 
    IM.Cadre();
-   if( NoColor ) SetColor( LGy );               // all in the same color
+   if (NoColor) SetColor(LGy);               // all in the same color
 
-   if( IM.What == CIRCLE || IM.What == CTBOTH ) // display circles
+   // ##### 2018-04-08
+   //if (IM.What == CIRCLE || IM.What == CTBOTH) // display circles
+   //   ScrDrawCirContours();
+   //if (IM.What == TRIANG || IM.What == CTBOTH) // display contours
+   //   if( IM.What == CIRCLE || IM.What == CTBOTH ) // display circles
+   //   ScrDrawCirContours();
+   //if( IM.What == TRIANG || IM.What == CTBOTH ) // display contours
+   //   if( IM.DrwC ) ScrDrawTriContours();
+   //   else          ScrDrawTriBisectors();
+
+   // ##### 2018-04-11
+   if (IM.WhatCir == CIRC_ON) // display circles
       ScrDrawCirContours();
-   if( IM.What == TRIANG || IM.What == CTBOTH ) // display contours
-      if( IM.DrwC ) ScrDrawTriContours();
-      else          ScrDrawTriBisectors();
 
-   TssThrowEpilog();                            // finish tesselation throw, if requested
+   // ##### 2018-04-13 en 2018-04-20
+   if (IM.WhatTri == TRIA_ON0 || IM.WhatTri == TRIA_ON2) // display contours
+   {
+      zgzg = &ZgZg0;
+      if (IM.DrwC) ScrDrawTriContours();
+      else         ScrDrawTriBisectors();
+   }
+   if (IM.WhatTri == TRIA_ON1 || IM.WhatTri == TRIA_ON2) // display contours
+   {
+      zgzg = &ZgZg1;
+      if (IM.DrwC) ScrDrawTriContours();
+      else         ScrDrawTriBisectors();
+   }
+   
+      
+      TssThrowEpilog();                            // finish tesselation throw, if requested
 
 #ifdef   __MAKE_PSF__                        // -- if program is enabled to make PS-file
    MakePSDisplayEpilog();                       // finish PostScript print
@@ -616,7 +668,9 @@ void DrawBis( pCLOS p ) {  // draw bisector line last 20% up to Prcs.D (presence
 }
                                                                         // ! no prototype
 void SDrw_PeekBisc() {           // draw peeking bisectors from (current) drawing time
-   pBISC b = (pBISC)ZgZg1.Cct;    // .. up to some future time T
+   // ##### 2018-04-13
+   // pBISC b = (pBISC)ZgZg1.Cct;    // .. up to some future time T
+   pBISC b = (pBISC)(zgzg->Cct);    // .. up to some future time T     ?? waarom de haakjes ?? priority ?
    while( (b=(pBISC)b->Next()) != NULL ) {         // piece of bisector line
       REAL T = ( Prcs.S > Prcs.X ) ? ( Prcs.D + 5 * Prcs.S )
                                    : ( Prcs.D + 3 * Prcs.X );
@@ -644,25 +698,30 @@ void SDrw_PeekBisc() {           // draw peeking bisectors from (current) drawin
 void ScrDrawTriContours() {               // -- draw all polygons
    if( !NoColor && ExColor )
       SDrw_PeekBisc();                       // if requested, draw all peeks
-
-   pCLOS p = ZgZg1.Act;
-   while( (p=p->Prev) != ZgZg1.Act )
+   // ##### 2018-04-22
+   pCLOS p = zgzg->Act;
+   while( (p=p->Prev) != zgzg->Act )
       DrawPol( p, L_MEDI );                  // clip/draw the whole polygon
 }
-
 void ScrDrawTriBisectors() {
-   pCLOS p = ZgZg1.Act;
-   while( (p=p->Prev) != ZgZg1.Act )
+   // ##### 2018-04-22
+   pCLOS p = zgzg->Act;
+   while( (p=p->Prev) != zgzg->Act )
       DrawBis( p );                          // draw current bisector
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - TEST
-void ShowEvent( BZTYP From, pPNT2 p, CTYP C, pCHAR T ) {
+//* ##### 2018-04-13
+void ShowEvent( ScrDrawCirc FromC, ScrDrawTria FromT, pPNT2 p, CTYP C, pCHAR T ) {
    // the BZTYP that is shown is not the one requesting to show an event
-   if( IM.What != CTBOTH && IM.What != From ) return;
+
+   // ##### 2018-04-20
+   return;
+   /* ? very voorlopig !
+   if( IM.WhatCir != FromC && IM.WhatTri != FromT ) return;     <- has been translated only, must be checked
    // the circle event is not from the generation shown currently
    if( From == CIRCLE && Bubb.Drw1G && Bubb.DrawG != Bubb.curGen() ) return;
-
+   */
    SetColor( C );
    OUTTEXTXY( 5, 15, T );
    if( VDom.Inner(p) ) {
@@ -675,10 +734,12 @@ void ShowEvent( BZTYP From, pPNT2 p, CTYP C, pCHAR T ) {
    // ## a possibility to stop here under test condition
    // ## a means to set the process step to 0
 }
+
 void ShowCircle( pPNT2 p, REAL L, REAL H, REAL R, CTYP C, uINT2 D ) {
-   if( IM.What == TRIANG ) return;                              // nothing to draw
+   if( IM.WhatCir != CIRC_ON ) return;                              // nothing to draw
    if( Bubb.Drw1G && Bubb.DrawG != Bubb.curGen() ) return;      // wrong generation
    SetColor( C );                                               // colour of test arc
    if( VDom.ClipArc(p,R,L,H) ) VDom.DrawClipArcs( CURVCLIP );   // draw circle
    delay( D * 1000 );
 }
+ // End of File

@@ -163,3 +163,4 @@ void  RevalPoly( pCLOS, pBISC );                    // revalue polygon
 void  BlendPoly( pCLOS, REAL );                     // determine types of contors/bisectors
 INT2  VolPoly( pCLOS );                             // N contours/bisectors in polygon
 #endif             // _PRC_STR_H
+// End of File

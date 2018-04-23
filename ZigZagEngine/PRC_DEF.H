@@ -121,8 +121,11 @@ public:                               // -- pointers to above classes
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - to handle the process
 // -- which space is in use (computation or on screen): circles, triangles or both
-enum BZTYP { CIRCLE, TRIANG, CTBOTH };
-
+// ##### 2018-04-08 en 2018-04-18
+// enum BZTYP { CIRCLE, TRIANG, CTBOTH };
+enum ScrDrawCirc { CIRC_OFF, CIRC_ON };
+enum ScrDrawTria { TRIA_OFF, TRIA_ON0, TRIA_ON1, TRIA_ON2 };
+                                    // triangle types are bound to their sequencing !
 class GRPH {                     // -- to control graphics
    pCHAR dirBGI;                    // directory for the BGI file
 public:
@@ -134,7 +137,7 @@ public:
    GRPH() { IsOpen = FALSE; }       // initialize graphics not opened
    void CommLine( INT2, pCHAR [] ); // scan command line for graphics
    void setBGI( pCHAR );            // to initialize dirBGI
-   void setDrv( pCHAR );            // to support CL-initialization
+   void setDrv( pCHAR );            // to support Command-Line-initialization
    void Open();                     // open graphics mode
    void Close();                    // close graphics mode
 };
