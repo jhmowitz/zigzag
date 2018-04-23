@@ -1,3 +1,4 @@
+
 extern INT2 GetChr();                     // get one key
 extern void Sleep( INT2 );                // delay n of seconds
 

@@ -363,7 +363,7 @@ namespace ZigZag
     void IZigZagHost.putpixel(short x, short y, Color color)
     {
       // Draw a single pixel in the supplied color
-      if (x < this._screenSize.Width && y < this._screenSize.Height)
+      if (x >= 0 && x < this._screenSize.Width && y >= 0 && y < this._screenSize.Height)
       {
         this._screenbitmaps[this._currentActivePage].SetPixel(x, y, color);
         this.InvalidatePage();

@@ -145,9 +145,9 @@ void MakePoly( INT2 N, pREAL arcs, pTISP o ) {  // -- init a new component
    pCLOS p_con = Make1Poly( N, arcs, 0.0, o );     // init continous part
    ordClosure( p_con, ZgZg0.Emg );                 // link continuous polygon into emergence queue
 
-   // ##### 2018-01-08      p_con and p_ref;          // triangles appear in different spaces  
-   pCLOS p_ref = Make1Poly(N, arcs, _PI, o);      // init reflective part
-   ordClosure(p_ref, ZgZg1.Emg);                  // link polygon into emergence queue
+   // ##### 2018-01-08 en 2018-04-20     p_con and p_ref;          // triangles appear in different spaces  
+   pCLOS p_ref = Make1Poly( N, arcs, _PI, o );        // init reflective part
+   ordClosure( p_ref, ZgZg1.Emg );                    // link polygon into emergence queue
 
 /*
    FILE *tlst = fopen( "test.lst", "a" );

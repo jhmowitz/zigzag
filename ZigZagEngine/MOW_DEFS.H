@@ -109,4 +109,4 @@ inline double pow10(double x)
  *    ! include only once into applicartion
  *    ! active inclusion of <new.h>
  */
-#define  MOW_LINK_CPP    "mow_util\memo\link_cpp.h" 
+#define  MOW_LINK_CPP    "mow_util\memo\link_cpp.h"

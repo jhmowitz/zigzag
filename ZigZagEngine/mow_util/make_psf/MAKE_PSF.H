@@ -10,7 +10,7 @@
 
 #if WIN32
 #ifndef CHAR
-#include "mow_defs.h"
+#include "mow_defs.h"            // incriptions for includes (use long double)
 #endif
 #endif
 
@@ -58,7 +58,7 @@ void FS_FIL::set_Time() {          // set begin time and time step
    // Mess_LT( _T("give step factor ( > 0 )") );
 	 while( nStp <= 0.1 ) // cin >> nStp;
 		 nStp = ReadReal(_T("give step factor ( > 0 )"));
-   FS_TimeStep = nStp * Prcs.S;
+	 FS_TimeStep = nStp * Prcs.S;
 }
 
 // -- printing a series of contours with a fixed timestep on 1 file
@@ -137,7 +137,7 @@ public:
       Used = FALSE;
       iFil = 0;
    }
-
+   /* voorlopig -- voor naam van een print
    pCHAR SetName( BZTYP Which ) {                  // -- set name at print request
       Used = TRUE;
       SPRINTF( &gen_name[PATHLEN+1], _T("%5.5d"), iFil ); // print sequence number
@@ -146,7 +146,8 @@ public:
       gen_name[TRIAPOS] = ( Which == TRIANG || Which == CTBOTH ) ? 'T' : USCOR;
       return gen_name;
    }
-};
+   */
+};   // ##### 2018-04-21
 
 // -- control writing of a PostScript file - interface to PSF
 class MAKEPS: public FNAMES, public FS1FIL, public FSMFIL {
@@ -204,7 +205,9 @@ public:
    BOOL PageQuit();              // (ks) quit image without sending file
    void PictDirect( BOOL );      // (ks) denote specific image to be next
 
-   void DisplayProlog( BZTYP );  // do before graphical display
+   // ##### 2018-04-21 
+   //void DisplayProlog( BZTYP );  // do before graphical display
+// ??   void DisplayProlog( ScrDrawCirc, ScrDrawTria );  // do before graphical display
    void ShowPSOpt( int, int );   // show options on screen
    void DisplayEpilog();         // do after graphical display
    void SetTitle( pCHAR );       // set title of one picture
@@ -232,7 +235,7 @@ public:
 
 // -- actually the .cpp -code starts here !
 
-#ifdef  _VIEWGRPH_CPP           // to include sources for PostScript printing
+#ifdef  //_VIEWGRPH_CPP           // to include sources for PostScript printing
 
 // MT: removed. cin no longer used
 // #include <iostream>           // cin
@@ -310,7 +313,8 @@ BOOL MakePSHandleMultPages() { return MakePS.HandleMultPage(); }
 void MakePSReInit() { MakePS.ReInit(); }  // reinitial file series names after usage
 
                                           // initial PostScript print
-void MakePSDisplayProlog( BZTYP W ) { MakePS.DisplayProlog( W ); }
+// ##### 2018-04-20 void MakePSDisplayProlog(BZTYP W) { MakePS.DisplayProlog(W); }
+void MakePSDisplayProlog( ScrDrawCirc CirW, ScrDrawTria TriW ) { MakePS.DisplayProlog( W ); }
                                           // finish PostScript print
 void MakePSDisplayEpilog() { MakePS.DisplayEpilog(); }
                                           // show options on screen
@@ -340,7 +344,7 @@ void HELPPS::LWidMsk( MskL m ) {           // set line width for PSF
       PSF.LinWidMsk( W, B_FULL );
    }
 }
-void HELPPS::PWidMsk( MskP m ) {           // set point width/mask for PSF
+void HELPPS::PWidMsk( MskP m ) {           // set point width/ for PSF
         if( PicTh == ThinTh ) PSF.PntWidMsk( PW_SMALL, B_FULL ); // standard thin
    else if( PicTh == ThckTh ) PSF.PntWidMsk( PW_LARGE, B_WW_B ); // standard thick
    else {                                                        // showy or normal
@@ -703,7 +707,9 @@ void MAKEPS::FSM_Epilog() {              // (sometimes) do not MakePSEpilog for 
    if( FS_M == FS_FINISH  ) FS_M = FS_UNUSED;   // FS_UNUSED and FS_FINISH
 }
 
-void MAKEPS::DisplayProlog( BZTYP W ) {  // do before graphical display
+// ##### eerst nadenken 2018-04-20
+// void MAKEPS::DisplayProlog(BZTYP W) {  // do before graphical display
+   void MAKEPS::DisplayProlog( ScrDrawCirc CirW, ScrDrawTria TriW ) {  // do before graphical display
    if( !FS1_Prolog() ) return;           // (sometimes) do not MakePSProlog for series
    FSM_Prolog();                         // check for series on many files
    if( !DoDraw ) return;
