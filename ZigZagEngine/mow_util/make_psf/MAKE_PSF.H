@@ -58,7 +58,7 @@ void FS_FIL::set_Time() {          // set begin time and time step
    // Mess_LT( _T("give step factor ( > 0 )") );
 	 while( nStp <= 0.1 ) // cin >> nStp;
 		 nStp = ReadReal(_T("give step factor ( > 0 )"));
-	 FS_TimeStep = nStp * Prcs.S;
+   FS_TimeStep = nStp * Prcs.S;
 }
 
 // -- printing a series of contours with a fixed timestep on 1 file
@@ -147,7 +147,7 @@ public:
       return gen_name;
    }
    */
-};   // ##### 2018-04-21
+}   // ##### 2018-04-21
 
 // -- control writing of a PostScript file - interface to PSF
 class MAKEPS: public FNAMES, public FS1FIL, public FSMFIL {
@@ -235,7 +235,7 @@ public:
 
 // -- actually the .cpp -code starts here !
 
-#ifdef  //_VIEWGRPH_CPP           // to include sources for PostScript printing
+#ifdef  _VIEWGRPH_CPP           // to include sources for PostScript printing
 
 // MT: removed. cin no longer used
 // #include <iostream>           // cin
@@ -344,7 +344,7 @@ void HELPPS::LWidMsk( MskL m ) {           // set line width for PSF
       PSF.LinWidMsk( W, B_FULL );
    }
 }
-void HELPPS::PWidMsk( MskP m ) {           // set point width/ for PSF
+void HELPPS::PWidMsk( MskP m ) {           // set point width/mask for PSF
         if( PicTh == ThinTh ) PSF.PntWidMsk( PW_SMALL, B_FULL ); // standard thin
    else if( PicTh == ThckTh ) PSF.PntWidMsk( PW_LARGE, B_WW_B ); // standard thick
    else {                                                        // showy or normal
