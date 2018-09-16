@@ -565,23 +565,28 @@ namespace ZigZag
         // Markus (23-4-2018): Dit deel converteert de opgeslagen EPS naar een PNG-file en toont
         // die in een apart tabblad.
         // Voor series EPS-files is dat heel storend, dus we zetten het even uit.
+        // 16-9-2018: Verfijning: Als de filenaam "zigzag.eps" is tonen we hem wel,
+        // anders niet
         case "eps":
-          {
-              string epsFilename = Host.MakeDataFileName(message);
-              Host.ShowMessage(string.Format("\nSaved EPS-file {0}", epsFilename));
-          //    string pngFilename = Path.ChangeExtension(epsFilename, ".png");
-          //    Ghostscript.Converter.Convert(epsFilename, pngFilename, Ghostscript.Converter.GhostScriptDeviceEnum.png16m, 1);
-          //    Host.ShowMessage(string.Format("\n{0} converted to {1}", epsFilename, pngFilename));
-          //    TabPage tabPage = new TabPage(Path.GetFileNameWithoutExtension(pngFilename));
-          //    ImageDisplayControl p = new ImageDisplayControl();
-          //    p.Closing += this.Image_Closing;
-          //    p.LoadImageFromFile(pngFilename);
-          //    p.Dock = DockStyle.Fill;
-          //    tabPage.Controls.Add(p);
-          //    this.tabControl1.TabPages.Add(tabPage);
-          //    this.tabControl1.SelectedTab = tabPage;
-          }
-          break;
+            {
+                string epsFilename = Host.MakeDataFileName(message);
+                if (message.EndsWith("\\zigzag.eps", StringComparison.OrdinalIgnoreCase)) {
+                    string pngFilename = Path.ChangeExtension(epsFilename, ".png");
+                    Ghostscript.Converter.Convert(epsFilename, pngFilename, Ghostscript.Converter.GhostScriptDeviceEnum.png16m, 1);
+                    Host.ShowMessage(string.Format("\n{0} converted to {1}", epsFilename, pngFilename));
+                    TabPage tabPage = new TabPage(Path.GetFileNameWithoutExtension(pngFilename));
+                    ImageDisplayControl p = new ImageDisplayControl();
+                    p.Closing += this.Image_Closing;
+                    p.LoadImageFromFile(pngFilename);
+                    p.Dock = DockStyle.Fill;
+                    tabPage.Controls.Add(p);
+                    this.tabControl1.TabPages.Add(tabPage);
+                    this.tabControl1.SelectedTab = tabPage;
+                } else {
+                    Host.ShowMessage(string.Format("\nSaved EPS-file {0}", epsFilename));
+                }
+            }
+            break;
 
         default:
           this.ConsoleTextBox.Text += "Unsupported event: " + eventName + "\r\n";
