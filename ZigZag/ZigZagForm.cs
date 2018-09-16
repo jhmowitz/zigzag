@@ -540,7 +540,7 @@ namespace ZigZag
     short IZigZagHost.getch()
     {
       // Return the character code of the key pressed. Blocking!
-      for (;;)
+      for (; ; )
       {
         if (this._keyboardBuffer.Count > 0)
         {
@@ -568,25 +568,28 @@ namespace ZigZag
         // 16-9-2018: Verfijning: Als de filenaam "zigzag.eps" is tonen we hem wel,
         // anders niet
         case "eps":
+          {
+            string epsFilename = Host.MakeDataFileName(message);
+            if (message.EndsWith("\\zigzag.eps", StringComparison.OrdinalIgnoreCase))
             {
-                string epsFilename = Host.MakeDataFileName(message);
-                if (message.EndsWith("\\zigzag.eps", StringComparison.OrdinalIgnoreCase)) {
-                    string pngFilename = Path.ChangeExtension(epsFilename, ".png");
-                    Ghostscript.Converter.Convert(epsFilename, pngFilename, Ghostscript.Converter.GhostScriptDeviceEnum.png16m, 1);
-                    Host.ShowMessage(string.Format("\n{0} converted to {1}", epsFilename, pngFilename));
-                    TabPage tabPage = new TabPage(Path.GetFileNameWithoutExtension(pngFilename));
-                    ImageDisplayControl p = new ImageDisplayControl();
-                    p.Closing += this.Image_Closing;
-                    p.LoadImageFromFile(pngFilename);
-                    p.Dock = DockStyle.Fill;
-                    tabPage.Controls.Add(p);
-                    this.tabControl1.TabPages.Add(tabPage);
-                    this.tabControl1.SelectedTab = tabPage;
-                } else {
-                    Host.ShowMessage(string.Format("\nSaved EPS-file {0}", epsFilename));
-                }
+              string pngFilename = Path.ChangeExtension(epsFilename, ".png");
+              Ghostscript.Converter.Convert(epsFilename, pngFilename, Ghostscript.Converter.GhostScriptDeviceEnum.png16m, 1);
+              Host.ShowMessage(string.Format("\n{0} converted to {1}", epsFilename, pngFilename));
+              TabPage tabPage = new TabPage(Path.GetFileNameWithoutExtension(pngFilename));
+              ImageDisplayControl p = new ImageDisplayControl();
+              p.Closing += this.Image_Closing;
+              p.LoadImageFromFile(pngFilename);
+              p.Dock = DockStyle.Fill;
+              tabPage.Controls.Add(p);
+              this.tabControl1.TabPages.Add(tabPage);
+              this.tabControl1.SelectedTab = tabPage;
             }
-            break;
+            else
+            {
+              Host.ShowMessage(string.Format("\nSaved EPS-file {0}", epsFilename));
+            }
+          }
+          break;
 
         default:
           this.ConsoleTextBox.Text += "Unsupported event: " + eventName + "\r\n";
@@ -621,7 +624,7 @@ namespace ZigZag
       using (InputForm f = new InputForm(prompt))
       {
         if (f.ShowDialog(this) == DialogResult.Cancel)
-          return -9999 ;
+          return -9999;
         return short.Parse(f.Input);// test test
       }
     }
@@ -629,7 +632,8 @@ namespace ZigZag
     {
       using (InputForm f = new InputForm(prompt))
       {
-        f.ShowDialog(this);
+        if (f.ShowDialog(this) == DialogResult.Cancel)
+          return -9999.0;
         if (string.IsNullOrEmpty(f.Input))
           return 0;
         return double.Parse(f.Input);

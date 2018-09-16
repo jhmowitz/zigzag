@@ -56,8 +56,11 @@ void FS_FIL::set_Time() {          // set begin time and time step
    REAL nStp = 0;                  // get fixed step measured in screen steps
    // MT: replaced Mess_LT + cin with ReadReal
    // Mess_LT( _T("give step factor ( > 0 )") );
-	 while( nStp <= 0.1 ) // cin >> nStp;
-		 nStp = ReadReal(_T("give step factor ( > 0 )"));
+   while (nStp <= 0.1) {// cin >> nStp;
+     nStp = ReadReal(_T("give step factor ( > 0 )"));
+     if (nStp == -9999.0)
+       return;
+   }
    FS_TimeStep = nStp * Prcs.S;
 }
 
