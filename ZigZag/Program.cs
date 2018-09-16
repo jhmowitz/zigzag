@@ -18,7 +18,8 @@ namespace ZigZag
     {
       try
       {
-        SetProcessDPIAware();
+        if (Environment.OSVersion.Version.Major >= 6)
+          SetProcessDPIAware();
 
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
