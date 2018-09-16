@@ -619,8 +619,12 @@ void MAKEPS::PageDivide() {
 	 while( nWid <= 0 || nHgt <= 0 ) {
 		 // cin >> nWid >> nHgt;
 		 nWid = ReadInt(_T("Number of columns:"));
+     if (nWid == -9999)
+       return;
 		 nHgt = ReadInt(_T("Number of rows:"));
-	 }
+     if (nHgt == -9999)
+       return;
+   }
 	 // TODO MT: 4 == A4
    PSF.Open( cur_name, LPT, 4);            // open file and prepare to draw
    PSF.DividePage( nWid, nHgt, Ratio(),  // several pictures on page

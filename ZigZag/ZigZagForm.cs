@@ -566,8 +566,9 @@ namespace ZigZag
         // die in een apart tabblad.
         // Voor series EPS-files is dat heel storend, dus we zetten het even uit.
         case "eps":
-          //  {
-          //    string epsFilename = Host.MakeDataFileName(message);
+          {
+              string epsFilename = Host.MakeDataFileName(message);
+              Host.ShowMessage(string.Format("\nSaved EPS-file {0}", epsFilename));
           //    string pngFilename = Path.ChangeExtension(epsFilename, ".png");
           //    Ghostscript.Converter.Convert(epsFilename, pngFilename, Ghostscript.Converter.GhostScriptDeviceEnum.png16m, 1);
           //    Host.ShowMessage(string.Format("\n{0} converted to {1}", epsFilename, pngFilename));
@@ -579,7 +580,7 @@ namespace ZigZag
           //    tabPage.Controls.Add(p);
           //    this.tabControl1.TabPages.Add(tabPage);
           //    this.tabControl1.SelectedTab = tabPage;
-          //  }
+          }
           break;
 
         default:
@@ -614,7 +615,8 @@ namespace ZigZag
     {
       using (InputForm f = new InputForm(prompt))
       {
-        f.ShowDialog(this);
+        if (f.ShowDialog(this) == DialogResult.Cancel)
+          return -9999 ;
         return short.Parse(f.Input);// test test
       }
     }
