@@ -389,8 +389,8 @@ void IMAGO::InitImago( BOOL reset ) {      // -- initialize Imago ( after VDom.I
 	 if (reset) {
     // ##### 2018-04-08
 	 // What = CTBOTH;                 // draw both planes
-       WhatCir = CIRC_OFF;            // not drawing circles
-       WhatTri = TRIA_OFF;             // not drawing triagles
+       WhatCir = CIRC_ON;            // not drawing circles
+       WhatTri = TRIA_ON0;             // not drawing triagles
 		 DrwC = TRUE;                   // draw mode: contours (not bisectors)
 		 Cadr = FALSE;                  // draw cadre not
 		 ReP = TRUE;                    // repaint always
@@ -467,7 +467,7 @@ void ExecuteScreenDraw(REAL T) {           // -- make order of display and execu
    TssThrowProlog();                            // initial tesselation throw, if requested
 
 #ifdef   __MAKE_PSF__                        // -- if program is enabled to make PS-file
-   MakePSDisplayProlog(IM.What);              // initial PostScript print
+   MakePSDisplayProlog(IM.WhatCir, IM.WhatTri);              // initial PostScript print
    MakePSShowOptions(GETMAXX(), GETMAXY());   // show PostScript options on screen
 #endif                                       // __MAKE_PSF__
 

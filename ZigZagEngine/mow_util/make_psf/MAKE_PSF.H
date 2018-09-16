@@ -10,7 +10,7 @@
 
 #if WIN32
 #ifndef CHAR
-#include "mow_defs.h"            // incriptions for includes (use long double)
+#include "..\..\MOW_DEFS.H"            // incriptions for includes (use long double)
 #endif
 #endif
 
@@ -147,7 +147,7 @@ public:
       return gen_name;
    }
    */
-}   // ##### 2018-04-21
+};   // ##### 2018-04-21
 
 // -- control writing of a PostScript file - interface to PSF
 class MAKEPS: public FNAMES, public FS1FIL, public FSMFIL {
@@ -207,7 +207,7 @@ public:
 
    // ##### 2018-04-21 
    //void DisplayProlog( BZTYP );  // do before graphical display
-// ??   void DisplayProlog( ScrDrawCirc, ScrDrawTria );  // do before graphical display
+   void DisplayProlog( ScrDrawCirc, ScrDrawTria );  // do before graphical display
    void ShowPSOpt( int, int );   // show options on screen
    void DisplayEpilog();         // do after graphical display
    void SetTitle( pCHAR );       // set title of one picture
@@ -314,7 +314,7 @@ void MakePSReInit() { MakePS.ReInit(); }  // reinitial file series names after u
 
                                           // initial PostScript print
 // ##### 2018-04-20 void MakePSDisplayProlog(BZTYP W) { MakePS.DisplayProlog(W); }
-void MakePSDisplayProlog( ScrDrawCirc CirW, ScrDrawTria TriW ) { MakePS.DisplayProlog( W ); }
+void MakePSDisplayProlog( ScrDrawCirc CirW, ScrDrawTria TriW ) { MakePS.DisplayProlog( CirW, TriW ); }
                                           // finish PostScript print
 void MakePSDisplayEpilog() { MakePS.DisplayEpilog(); }
                                           // show options on screen
