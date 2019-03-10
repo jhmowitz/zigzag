@@ -111,7 +111,11 @@ namespace ZigZag
       Directory.CreateDirectory(dataFolder);
       Directory.CreateDirectory(Path.Combine(dataFolder, "eps"));
 
-      this._dataPath = dataFolder;
+      string epsPath = System.Configuration.ConfigurationManager.AppSettings["epsdir"];
+      if (epsPath != null)
+        this._dataPath = epsPath;
+      else
+        this._dataPath = dataFolder; //  Path.Combine(dataFolder, "eps");
     }
 
     // arno: bij het debuggen met F11 kom ik telkens hier terug, zonder dat ik het inputscherm te zien krijg...
@@ -579,7 +583,11 @@ namespace ZigZag
         // De F12-series laten we NIET op het scherm zien, de overige wel. p en P op de filenaam, F11 op de tekst van de melding.
         case "eps":
           {
-            string epsFilename = Host.MakeDataFileName(message);
+            // De filenaam moet met eps\ beginnen
+            if (!message.StartsWith("eps\\",StringComparison.OrdinalIgnoreCase))
+              throw new Exception("NotifyEvent: filenaam moet met eps\\ beginnen");
+
+            string epsFilename = Host.MakeDataFileName(message/*.Substring(4)*/); // Kap keihard eps\ van begin af
             if (
                 message.EndsWith("\\zigzag.eps", StringComparison.OrdinalIgnoreCase) || // Enkele print (p) of veel-op-een (P)
                 this._lastMessage.Contains("Print on one file")
@@ -641,6 +649,7 @@ namespace ZigZag
         return short.Parse(f.Input);// test test
       }
     }
+
     double IZigZagHost.ReadReal(string prompt)
     {
       using (InputForm f = new InputForm(prompt))
@@ -652,6 +661,7 @@ namespace ZigZag
         return double.Parse(f.Input);
       }
     }
+
     string IZigZagHost.MakeDataFileName(string name)
     {
       return Path.Combine(this._dataPath, name);
