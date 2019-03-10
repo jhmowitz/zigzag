@@ -553,9 +553,12 @@ namespace ZigZag
       }
     }
 
+    protected string _lastMessage = null;
+
     void IZigZagHost.ShowMessage(string message)
     {
       this.LogMessage(message.Replace("\n", "\r\n").Replace("\n\n", "\n"));
+      this._lastMessage = message;
     }
 
     void IZigZagHost.NotifyEvent(string eventName, string message)
@@ -567,10 +570,20 @@ namespace ZigZag
         // Voor series EPS-files is dat heel storend, dus we zetten het even uit.
         // 16-9-2018: Verfijning: Als de filenaam "zigzag.eps" is tonen we hem wel,
         // anders niet
+        // MT 10-3-2019: er zijn verschillende situaties waarin we eps-files aanleggen.
+        // p: print een enkele pagina "\nPrint and draw picture of full page" (naam is zigzag.eps)
+        // P: print verschillende plaatjes op één pagina "\nDraw divided page by completion" (naam is zigzag.eps)
+        // F11: maak een enkele print met verschillende plaatjes "\nPrint on one file -- file name is >eps\\abcdef00.eps<"
+        // F12: maak een serie plaatjes "\nPrint on a file series -- file name is >eps\\abcd0000.eps<"
+        // Om ze te kunnen onderscheiden maken we gebruik van de melding die VOORAFGAAND aan de print-opdracht verschijnt.
+        // De F12-series laten we NIET op het scherm zien, de overige wel. p en P op de filenaam, F11 op de tekst van de melding.
         case "eps":
           {
             string epsFilename = Host.MakeDataFileName(message);
-            if (message.EndsWith("\\zigzag.eps", StringComparison.OrdinalIgnoreCase))
+            if (
+                message.EndsWith("\\zigzag.eps", StringComparison.OrdinalIgnoreCase) || // Enkele print (p) of veel-op-een (P)
+                this._lastMessage.Contains("Print on one file")
+            )
             {
               string pngFilename = Path.ChangeExtension(epsFilename, ".png");
               Ghostscript.Converter.Convert(epsFilename, pngFilename, Ghostscript.Converter.GhostScriptDeviceEnum.png16m, 1);
