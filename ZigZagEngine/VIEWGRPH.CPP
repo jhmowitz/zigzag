@@ -106,7 +106,7 @@ class VDOM: public LIN_CLIP {      // -- rectangular x,y-region around M
 public:
    VEC2 PixRge;                          // X- and Y-range in pixels
    INT2 X, Y;                            // current pixel
-//   BOOL ShowRP;                          // show resolving power
+//   BOOL ShowRP;                          // show resolving power 
 //   REAL CurDist();                       // for resolving power
 
    void GraphInit( BOOL );               // set suitable(starting) screen parameter

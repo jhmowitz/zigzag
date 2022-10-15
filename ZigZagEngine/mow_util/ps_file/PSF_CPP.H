@@ -549,7 +549,7 @@ void PSPAGE::selectPos( INT2 iPic, pPNT2 mP, REAL hXR ) {  // -- init #th pictur
    OffX = offX; OffY = offY;                // keep pixel origine translation
 
    Scale = PxPict.X / ( HigX() - LowX() );  // scale to bring pixels into data
-   scaleXY( Scale );                        // set new scale
+   scaleXY(0.95 * Scale );                        // set new scale ''20210331 tijdelijk
    translateO( -LowX(), -LowY() );          // translate lower left data corner
                                             // .. into lower left frame corner
    PrvX = LowX(); PrvY = LowY();            // keep data origine translation
