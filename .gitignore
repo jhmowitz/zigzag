@@ -16,3 +16,6 @@
 /ZigZag.NET.v12.suo
 *.cache
 /.vs
+/x64/Debug
+/ZigZag/obj/x64/Debug
+/ZigZagEngine/x64/Debug
