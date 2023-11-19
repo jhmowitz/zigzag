@@ -1,3 +1,3 @@
 # zigzag
 
-This is the repository for ZipZag by Joachim Mowitz.
+This is the repository for ZigZag by Joachim Mowitz.
