@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2046
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZigZagEngine", "ZigZagEngine\ZigZagEngine.vcxproj", "{36203138-BF6E-45B3-875A-643E3F02C67B}"
 EndProject
@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E9E46C2A-2B4C-4CD8-AF0B-631FA05A49A9}"
 	ProjectSection(SolutionItems) = preProject
 		MakeSFX.cmd = MakeSFX.cmd
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Ghostscript", "Ghostscript\Ghostscript.vbproj", "{9E93A30A-B74F-4693-A83F-20CD4BF0EE27}"
