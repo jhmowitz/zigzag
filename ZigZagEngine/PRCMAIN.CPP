@@ -170,7 +170,7 @@ BOOL PROCS::Parse( INT2 c ) {          // -- parse for process
          return TRUE;
                                  // -- giving messages only !
       case CROSS_OVER:              // '_': (no) connection between parts
-         Message( L"Circles and triangles are %s", CrossOver?"connected":"loose" );
+         Message( L"Circles and triangles are %s", CrossOver? L"connected":L"loose" );
          return TRUE;
       case EXTRA_EMERG:             // '$': extra emergence at "loss of structure"
       case INCR_EMERG:              // 'Z': increase emergence chance by 0.05
