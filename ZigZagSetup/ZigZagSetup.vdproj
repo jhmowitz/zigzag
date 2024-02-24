@@ -268,7 +268,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ZigZag"
         "ProductCode" = "8:{6A3A5896-07E1-46F4-BAB7-C09D4FD9FA16}"
-        "PackageCode" = "8:{A3F5C904-272D-42FD-BEFE-4C3CFF638B21}"
+        "PackageCode" = "8:{E96DB1E9-2B2A-47D7-9D09-0BC8FC159200}"
         "UpgradeCode" = "8:{4B80FE4D-1378-4EDA-B78F-3C050ED5AD66}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -394,12 +394,12 @@
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
+            "IconIndex" = "3:32512"
             "Transitive" = "11:FALSE"
             "Target" = "8:_9246656D8AC54B00B840106D03C62D81"
             "Folder" = "8:_1E3B27612EFD40F88BF5306CEC5DF1C0"
             "WorkingFolder" = "8:_735371C4B2EF47D7AF5B37AB58F06880"
-            "Icon" = "8:"
+            "Icon" = "8:_9246656D8AC54B00B840106D03C62D81"
             "Feature" = "8:"
             }
         }

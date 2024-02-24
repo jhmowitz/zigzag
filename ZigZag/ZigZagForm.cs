@@ -5,6 +5,7 @@ using System.Drawing.Imaging;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Collections.Generic;
+using ZigZag.Properties;
 
 namespace ZigZag
 {
@@ -101,6 +102,8 @@ namespace ZigZag
     public ZigZagForm()
     {
       this.InitializeComponent();
+
+      this.Icon = Resources.ZigZag;
 
       this.MouseWheel += DisplayPictureBox_MouseWheel;
       this.mainStatusLabel.Text = "ZigZag.NET v" + new Version(Application.ProductVersion).ToString(3) + " ready.";
