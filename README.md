@@ -2,6 +2,8 @@
 
 This is the repository for ZigZag by Joachim Mowitz.
 
+![ZigZag image](https://raw.githubusercontent.com/jhmowitz/zigzag/main/ZigZag/ZigZag.png)
+
 See also the book by Mowitz & Goudsmit: [Movements of Form](https://link.springer.com/book/9783031448201). Springer, 2024.
 
 <!--
