@@ -606,7 +606,8 @@ namespace ZigZag
               p.Dock = DockStyle.Fill;
               tabPage.Controls.Add(p);
               this.tabControl1.TabPages.Add(tabPage);
-              this.tabControl1.SelectedTab = tabPage;
+              // Do NOT select the new tab
+              // this.tabControl1.SelectedTab = tabPage;
             }
             else
             {
