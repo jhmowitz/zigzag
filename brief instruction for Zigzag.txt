@@ -114,4 +114,4 @@ ww				(show both triangle types)
 
 
 have fun!
-(email: movs_of_form@edtmaastricht.nl)
+(email: zigzag-git@edtmaastricht.nl)
