@@ -19,6 +19,6 @@ More information (such as a brief manual for using zigzag) will be added within 
 
 ## Version 1.0
 
-Version 1.0 of ZigZag has been [released](https://github.com/jhmowitz/zigzag/releases/tag/v1.0.0)!
+Version 1.0 of ZigZag has been [released](https://github.com/jhmowitz/zigzag/releases)!
 
 
