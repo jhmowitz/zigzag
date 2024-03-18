@@ -15,7 +15,7 @@ _Provides new insights into the processes that underlie the origination of compl
 -->
 And: a ['pdf movie'](https://www.edtmaastricht.nl/overig/zigzag_simulaties/20230318___73filmpje.pdf)
 
-More information (such as a brief manual for using zigzag) will be added within soon
+See "brief instruction for Zigzag.txt" for a user manual.
 
 ## Version 1.0
 
