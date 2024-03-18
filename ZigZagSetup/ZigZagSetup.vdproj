@@ -15,13 +15,13 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_49593D989DB19B8461BED20BD3153099"
+        "MsmKey" = "8:_60D38293F5BCF18A457093DAC78D00D6"
         "OwnerKey" = "8:_9246656D8AC54B00B840106D03C62D81"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_7A362C88C52D81F575C715F185B7292A"
+        "MsmKey" = "8:_7E32377AA90948011D11F0AF93F10B85"
         "OwnerKey" = "8:_9246656D8AC54B00B840106D03C62D81"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -46,13 +46,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_7A362C88C52D81F575C715F185B7292A"
+        "OwnerKey" = "8:_60D38293F5BCF18A457093DAC78D00D6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_49593D989DB19B8461BED20BD3153099"
+        "OwnerKey" = "8:_7E32377AA90948011D11F0AF93F10B85"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -150,20 +150,20 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_49593D989DB19B8461BED20BD3153099"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_60D38293F5BCF18A457093DAC78D00D6"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ZigZagEngine, Version=1.0.8820.26033, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:Ghostscript, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_49593D989DB19B8461BED20BD3153099"
+                    "_60D38293F5BCF18A457093DAC78D00D6"
                     {
-                    "Name" = "8:ZigZagEngine.dll"
+                    "Name" = "8:Ghostscript.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:ZigZagEngine.dll"
+            "SourcePath" = "8:Ghostscript.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_735371C4B2EF47D7AF5B37AB58F06880"
@@ -181,20 +181,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7A362C88C52D81F575C715F185B7292A"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7E32377AA90948011D11F0AF93F10B85"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Ghostscript, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:ZigZagEngine, Version=1.0.8839.41721, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_7A362C88C52D81F575C715F185B7292A"
+                    "_7E32377AA90948011D11F0AF93F10B85"
                     {
-                    "Name" = "8:Ghostscript.dll"
+                    "Name" = "8:ZigZagEngine.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Ghostscript.dll"
+            "SourcePath" = "8:ZigZagEngine.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_735371C4B2EF47D7AF5B37AB58F06880"
@@ -299,8 +299,8 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ZigZag"
-        "ProductCode" = "8:{EAEC18F9-DFDA-47B5-9890-BACB58AF6F8A}"
-        "PackageCode" = "8:{158DD7AA-648D-4654-8AD9-53C89F40A0FD}"
+        "ProductCode" = "8:{F1ADE281-FA9C-4CB3-894D-CE58BB04D2A2}"
+        "PackageCode" = "8:{6D5ACFB4-C04D-4CEB-BC94-998A2E65BB8F}"
         "UpgradeCode" = "8:{4B80FE4D-1378-4EDA-B78F-3C050ED5AD66}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
