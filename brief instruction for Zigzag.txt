@@ -1,0 +1,117 @@
+brief instruction for Zigzag.exe
+
+
+1. startup keys:
+
+ctrl-g: to start the process
+
+start option 1: throw random points without container
+
+'>'/'<': increase/decrease the start random number (useful for reproducing a particular configuration, other parameters being equal)
+
+ 
+either: skip this step: both triangles and circles will be thrown
+or: press '*' once: triangles only will be thrown
+or: press '**' twice: circles only will be thrown
+
+
+toggle 'w': 
+do not press 'w': type 'continous' triangles will be visible
+press 'w' once: type 'reflected' triangles will be visible
+press 'w' twice: both triangle types will be visible
+press 'w' thrice: no triangles will be visible
+	(in our book "Movements of Form" the 'continuous' and 'reflected' types are shown in blue and green respectively)
+
+
+press 'W' to toggle circles invisible/visible
+
+choose a number between 1 and 9 and see the following:
+
+'1'     // create one circle/triangle
+'2'     // create two circles/triangles
+'3'     //  5
+'4'     // 10
+'5'     // 20
+'6'     // 50
+'7'     // 100
+'8'     // 200
+'9'     // 500
+
+
+start option 2: throw points within containing shape
+
+press '.'
+'l'/'L': zoom out/in
+alt-l: zoom out a bit
+'d'/'D'; decrease/increase density (number of points)
+'f': toggle along various initial container shapes
+only for rectangles: 'a'/'A': frame shorter/longer
+'/': toggle without/with subframe
+only for subframes: 'o'/'O': decrease/increase subframe
+'q'/'Q': rotate frame counterclockwise/clockwise
+alt-q: rotate frame a bit counterclockwise
+'t': toggle tesselation type
+'e'/'E': decrease/increase the number of omitted points
+'r'/'R': rotate tesselation counterclockwise/clockwise
+alt-r: rotate a bit counterclockwise
+'-'/'+': decrease/increase perturbation
+':': start process
+
+
+
+2. adjustment keys:
+'s' / 'S': zoom out/in
+'x' / 'X': step left/right
+'y' / 'Y': step down/up
+'!': toggle between pause and resume
+'+': increase process time step
+'-': decrease process time step
+'D': increase delay
+'d': decrease delay
+'W' and 'w': as above
+
+'k': toggle between colors off/on
+'K': toggle between on/off show expected developments encounter points 
+after 'K': 
+'F': increase time span of expected developments
+'f': decrease time span of expected developments
+alt-m: for triangles: toggle between contour lines and bisectors
+alt-/: toggle draw cadre
+alt-g: toggle draw generations of circles
+after alt-g: 
+'g': draw next circle generation
+'G': draw previous circle generation
+
+3. print keys
+'p': this produces two snapshot image files, one zigzag.png and one zigzag.eps
+F11: produces a snapshot series on a single eps file; F11 stops it
+F12: produces a snapshot series on multiple eps files; F12 stops it
+	The system folder in which the files are stored is mentioned in the 'console' tab.
+'P': divide page into several pictures
+
+
+
+examples:
+
+A.
+use the following sequence of keys:
+ctrl-g 				(start run)
+* 				(throw circles only)
+ww				(show both triangle types)
+>>				(start random number generator = 2)
+4				(throw 10 circles & start process)
+
+
+B.
+use the following sequence of keys:
+ctrl-g				(start run)
+.				(show initial frame and circle points)
+f				(choose triangle frame)				
+DDD				(increase density)
+++++				(increase perturbation)
+ww				(show both triangle types)
+:				(start process)
+
+
+have fun!
+(email: movs_of_form@edtmaastricht.nl)
